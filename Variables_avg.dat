@@ -8,6 +8,7 @@ Yes	WCAC Outlet Temperature	T_adm_media	Plenum/WCACOutlet-1/Temperature[degC]	de
 Yes	Mass Flow	M_Aire	Pipe/AirFilterOutlet/0.010m/MassFlow[kg/s]	Kg/h	3600	0	450
 Yes	EGR Mass Flow	MEGR	Pipe/LPEGRCoolerOutlet/0.010m/MassFlow[kg/s]	Kg/h	3600	0	NA
 Yes	EGR Rate	EGR	Pipe/LPEGRCoolerOutlet/0.010m/MassFlow[kg/s]	%	1	0	60
+Yes	HP EGR Rate	EGR	Pipe/Cyl1Inlet_1/0.078m/MassFlow[kg/s],Pipe/Cyl1Inlet_1/0.078m/MassFlow[kg/s],Pipe/Cyl1Inlet_1/0.078m/MassFlow[kg/s],Pipe/Cyl1Inlet_1/0.078m/MassFlow[kg/s],Pipe/Cyl1Inlet_1/0.078m/MassFlow[kg/s],Pipe/Cyl1Inlet_1/0.078m/MassFlow[kg/s],Pipe/Cyl1Inlet_1/0.078m/MassFlow[kg/s],Pipe/Cyl1Inlet_1/0.078m/MassFlow[kg/s]	%	1	0	60
 Yes	Oil Temperature	T_Oil1	HydrCircuit/OilCircuit-1/ObjectTemp[degC]/pipe/OilCoolerOutlet	degC	1	80	120
 Yes	Oil Cooler Flow	Vxx_et_psn_raw_mv_tot_1	HydrCircuit/OilCircuit-1/OilCooler/Flow[L/min]	L/min	1	NA	NA
 Yes	Coolant Temperature	T_S_W_Mot	HydrCircuit/CoolantCircuit-1/ObjectTemp[degC]/pipe/EngineValveInlet	degC	1	75	100
@@ -31,9 +32,9 @@ Yes	EGRLP Cooler Outlet Temperature	T_S_INT_EGRLP	Pipe/LPEGRCoolerOutlet/0.010m/
 Yes	EGRLP Cooler Inlet Temperature	T_E_INT_EGRLP	Pipe/LPEGRCoolerInlet/0.990m/Temperature[degC]/Static	degC	1	NA	NA
 Yes	Fuel Mass	MF	Engine/FuelMassCylinder&Cycle[mg]	mg	1.00E+00	NA	NA
 Yes	Turbocharger Speed	rpm_turbo	Turbocharger/Turbocharger-1/Speed[rpm]	krpm	1e-3	NA	NA
-Yes	Turbocharger Power	-	-	kW	1	0	NA
-Yes	Turbocharger Heat Power	-	-	kW	1	0	NA
-Yes	Turbocharger efficiency	-	-	kW	1	0	NA
+Yes	Turbocharger Power	-	Turbine/Turbine-1/Power[kW],Compressor/Compressor-1/Power[kW],Turbocharger/Turbocharger-1/MechanicalLosses[kW]	kW	1	0	NA
+Yes	Turbocharger Heat Power	-	Turbine/Turbine-1/Heat[kW],Compressor/Compressor-1/Heat[kW],Turbocharger/Turbocharger-1/Heat/ToOil[kW],Turbocharger/Turbocharger-1/Heat/ToAmbient[kW]	kW	1	0	NA
+Yes	Turbocharger efficiency	-	Turbine/Turbine-1/Efficiency[-],Compressor/Compressor-1/Efficiency[-]	kW	1	0	NA
 No	Apparent Comb Eff	 Parámetro_CALMEC(%)	Engine/HeatBurned[kW]	-	1	80	120
 Yes	Effective Efficiency	effective_eff	Engine/EffectiveEfficiency[-]	-	1	0	NA
 Yes	Indicated Efficiency	 Rendimiento_indicado_h.p.(%)	Engine/IndicatedEfficiency[-]	%	100	NA	NA

@@ -517,7 +517,7 @@ def plot_trends(data, cases, styles, path, name, units, r=1):
 
     # Set legend
     if r != 3:
-        ax.legend([r[0] for r in rects[:-1]], legend, ncol=10,
+        ax.legend([r[0] for r in rects[:-1]], legend, ncol=7,
                   bbox_to_anchor=(0.5, 1), loc='lower center', fontsize=11)
 
     # Set limits

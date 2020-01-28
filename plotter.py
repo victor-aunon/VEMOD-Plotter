@@ -6,11 +6,11 @@ experimental measurements.
 """
 
 __author__ = "Angel Auñón"
-__copyright__ = 'Copyright 2019, VEMOD plotter'
+__copyright__ = 'Copyright 2020, VEMOD plotter'
 __credits__ = ["Angel Auñón", "Paco Arnau"]
 __license__ = 'GPL'
-__version__ = '2.0.0'
-__date__ = '2019-12-04'
+__version__ = '2.0.1'
+__date__ = '2020-01-13'
 __maintainer__ = "Angel Auñón"
 __email__ = 'ngeaugar@mot.upv.es'
 __status__ = 'Development'
@@ -113,7 +113,7 @@ def average_variable(array, percentage) -> float:
 
     Parameters
     ----------
-    array: pandas.Serie, required
+    array: pandas.Series, required
         The numeric array
     percentage: float, required
         The last percentage of values to be considered in the array
@@ -939,14 +939,14 @@ def main(mode=None):
                         var.set_values({key: {
                             'model':
                             {'turbine': average_variable(
-                                mod_case['Turbine/Turbine-1/Power[kW]'],
+                                mod_case[var.model_col.split(',')[0].strip()],
                                 cycles),
                              'compressor': average_variable(
-                                mod_case['Compressor/Compressor-1/Power[kW]'],
+                                mod_case[var.model_col.split(',')[1].strip()],
                                 cycles),
                              'mech_losses': average_variable(
-                                mod_case['Turbocharger/Turbocharger-1/'
-                                         'MechanicalLosses[kW]'], cycles),
+                                mod_case[var.model_col.split(',')[2].strip()],
+                                cycles),
                              }
                         }})
                         var.exp_col = None
@@ -954,25 +954,24 @@ def main(mode=None):
                         var.set_values({key: {
                             'model':
                             {'turbine': average_variable(mod_case[
-                                'Turbine/Turbine-1/Heat[kW]'], cycles),
+                                var.model_col.split(',')[0].strip()] * -1,
+                                cycles),
                              'compressor+': average_variable(
-                                mod_case['Compressor/Compressor-1/Heat[kW]'],
+                                mod_case[var.model_col.split(',')[1].strip()],
                                 cycles) if average_variable(
-                                mod_case['Compressor/Compressor-1/Heat[kW]'],
+                                mod_case[var.model_col.split(',')[1].strip()],
                                 cycles) >= 0.
                                 else 0.,
                              'compressor-': average_variable(
-                                mod_case['Compressor/Compressor-1/Heat[kW]'],
+                                mod_case[var.model_col.split(',')[1].strip()],
                                 cycles) if average_variable(
-                                mod_case['Compressor/Compressor-1/Heat[kW]'],
+                                mod_case[var.model_col.split(',')[1].strip()],
                                 cycles) < 0.
                                 else 0.,
                              'oil': average_variable(mod_case[
-                                'Turbocharger/Turbocharger-1/Heat/ToOil[kW]'],
-                                cycles),
-                             'ambient': average_variable(
-                                 mod_case['Turbocharger/Turbocharger-1/'
-                                          'Heat/ToAmbient[kW]'], cycles),
+                                var.model_col.split(',')[2].strip()], cycles),
+                             'ambient': average_variable(mod_case[
+                                var.model_col.split(',')[3].strip()], cycles),
                              }
                         }})
                         var.exp_col = None
@@ -980,10 +979,10 @@ def main(mode=None):
                         var.set_values({key: {
                             'model':
                             {'turbine': average_variable(mod_case[
-                                'Turbine/Turbine-1/Efficiency[-]'],
+                                var.model_col.split(',')[0].strip()],
                                 cycles),
                              'compressor': average_variable(mod_case[
-                                'Compressor/Compressor-1/Efficiency[-]'],
+                                var.model_col.split(',')[1].strip()],
                                 cycles),
                              }
                         }})
@@ -1030,6 +1029,20 @@ def main(mode=None):
                              }
                         }})
                         var.exp_col = None
+                    elif var.name == 'HP EGR Rate':
+                        amf_col = [v.model_col for v in var_list
+                                   if v.name == 'Mass Flow'][0]
+                        amf = average_variable(mod_case[amf_col], cycles)
+                        int_ports_amf_cols = var.model_col.split(',')
+                        int_ports_amf = 0.0
+                        for col in int_ports_amf_cols:
+                            int_ports_amf += average_variable(mod_case[
+                                col.strip()], cycles)
+                        var.set_values({key: {
+                            'model': 100 * (int_ports_amf - amf) /
+                            (int_ports_amf) * var.conv_factor,
+                            'exp': exp_case[var.exp_col].values[0]
+                        }})
                     elif var.name == 'EGR Rate':
                         amf_col = [v.model_col for v in var_list
                                    if v.name == 'Mass Flow'][0]

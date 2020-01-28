@@ -254,9 +254,9 @@ def create_summary(args, var_list, path, mod_label=None, exp_label=None,
             columns.append('std rel (%) {} division'.format(div['@name']))
             columns.append('R squared {} division'.format(div['@name']))
         for error in profile['errors']:
-            columns.append('abs error at {}% of points'.format(
+            columns.append('max abs error at {}% of points'.format(
                 error['@pointsPercentage']))
-            columns.append('SMAPE (%) at {}% of points'.format(
+            columns.append('max abs SMAPE (%) at {}% of points'.format(
                 error['@pointsPercentage']))
 
         summary_dict = OrderedDict()
@@ -401,11 +401,10 @@ def transient_variable_summary(var, mod_label=None, exp_label=None,
                                   ] = r_value**2
         for error in profile['errors']:
             index = int(len(xde) * error['@pointsPercentage'] / 100)
-            index = int(len(xde) * error['@pointsPercentage'] / 100)
-            summary_var[var.name]['abs error at {}% of points'.format(
+            summary_var[var.name]['max abs error at {}% of points'.format(
                 error['@pointsPercentage'])
                 ] = sorted(map(abs, abs_error))[index]
-            summary_var[var.name]['SMAPE (%) at {}% of points'.format(
+            summary_var[var.name]['max abs SMAPE (%) at {}% of points'.format(
                     error['@pointsPercentage'])
                 ] = sorted(map(abs, [smape([m], [e]) for m, e in zip(
                     ydm, yde)]))[index]
