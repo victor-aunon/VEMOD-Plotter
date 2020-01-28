@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="config.xsd">
+    <engine pistonDiameter="0.08002" crankRadius="0.0398" fuelPCI="42.92" totalDisplacement="0.0016" cylinders="4" 
+        injectionPulses="3"/>
+    <plotStyles lineStyleExp="-" lineStyleModel=":" lineWidthExp="1.5" lineWidthModel="1.5" colorExp="#E24A33" colorModel="#348ABD"
+        labelExp="Reference" labelModel="VEMOD" style="ggplot" fontSize="14" fontFamily="sans-serif" font="DejaVu Sans" />
+    <plottingOptions>
+        <emissions plot="true" location="Pipe/Exhaust/0.010m" />
+        <trends plot="true" />
+        <timeEvolution plot="true" steadyVariablesFile="Steady_model_vars.dat"
+            transientVariablesFile="Transient_model_vars.dat" />
+    </plottingOptions>
+    <experimentalProcessing>
+        <inputFile category="calmecAverages">
+           D:/UPV/Jaime Martín Díaz - 0_VEMOD_OneDrive/1_Ensayos/0_Ensayos_sala_12/Estacionarios/Resglob_20180926.dat
+        </inputFile>
+        <inputFile category="experimentalRaw">
+            D:/UPV/Jaime Martín Díaz - 0_VEMOD_OneDrive/1_Ensayos/0_Ensayos_sala_12/Estacionarios/TodasCombustiones.xlsx
+        </inputFile>
+        <outputFile>
+            ../INPUT_dataset/medidas_SS/ExperimentalData.xlsx
+        </outputFile>
+    </experimentalProcessing>
+    <simulationProcessing>
+        <settings roomTempConditions="ambient" modelNamePrefix="R9M_lab12_" xmlCase="Default" simulationMode="testbench"
+            simulationPath="../User_VEMOD_Model/simulation/results" processingPath="" />
+        <transient experimentalPath="../INPUT_dataset/medidas_WLTC" variablesFile="Variables_transient.dat" simTime="1800">
+            <divisions>
+                <division name="Low" start="0.0" end="589" />
+                <division name="Medium" start="589" end="1022" />
+                <division name="High" start="1022" end="1477" />
+                <division name="Extra High" start="1477" end="1800" />
+            </divisions>
+            <errorEvaluation>
+                <error pointsPercentage="50" />
+                <error pointsPercentage="70" />
+                <error pointsPercentage="80" />
+                <error pointsPercentage="90" />
+                <error pointsPercentage="95" />
+            </errorEvaluation>
+        </transient>
+        <steady averagingPercentage="3" experimentalFile="../INPUT_dataset/medidas_SS/ExperimentalData.xlsx" 
+            variablesAverageFile="Variables_avg.dat" variablesInstantaneousFile="Variables_ins.dat" 
+            calmecInstantaneousPath="D:/UPV/Jaime Martín Díaz - 0_VEMOD_OneDrive/1_Ensayos/0_Ensayos_sala_12/Estacionarios/Instantaneous_20180926" >
+            <cases>
+                <case name="0850_000_h_2">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1000_021_h_2">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1000_044_h_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1000_066_h_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1000_088_h_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1250_013_h_6">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1250_026_h_4">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1250_050_h_6">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1250_076_h_5">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1250_100_h_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1500_011_h_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1500_025_h_2">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1500_050_h_3">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1500_075_h_2">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1500_100_h_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="2500_025_h_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="2500_050_h_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="2500_075_h_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="2500_100_h_3">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="3500_025_h_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="3500_050_h_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="3500_075_h_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="3500_100_h_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1500_025_c_4">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="1500_075_c_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+                <case name="3500_025_c_1">
+                    <nomenclature>
+                        <labelPart property="speed"/>
+                        <labelPart property="load"/>
+                        <labelPart property="roomTemperature"/>
+                        <labelPart property="repetition"/>
+                    </nomenclature>
+                </case>
+            </cases>
+        </steady>
+    </simulationProcessing>
+</config>

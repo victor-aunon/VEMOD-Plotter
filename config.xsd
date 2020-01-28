@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="config">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="engine">
+					<xs:complexType>
+						<xs:attribute name="pistonDiameter" type="xs:float" use="required" />
+						<xs:attribute name="crankRadius" type="xs:float" use="required" />
+						<xs:attribute name="fuelPCI" type="xs:float" use="required" />
+						<xs:attribute name="totalDisplacement" type="xs:float" use="required" />
+						<xs:attribute name="cylinders" type="xs:unsignedByte" use="required" />
+						<xs:attribute name="injectionPulses" type="xs:unsignedByte" use="required" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="plotStyles">
+					<xs:complexType>
+						<xs:attribute name="lineStyleExp" type="xs:string" use="optional" />
+						<xs:attribute name="lineStyleModel" type="xs:string" use="optional" />
+						<xs:attribute name="lineWidthExp" type="xs:float" use="optional" />
+						<xs:attribute name="lineWidthModel" type="xs:float" use="optional" />
+						<xs:attribute name="colorExp" type="xs:string" use="optional" />
+						<xs:attribute name="colorModel" type="xs:string" use="optional" />
+						<xs:attribute name="labelExp" type="xs:string" use="optional" />
+						<xs:attribute name="labelModel" type="xs:string" use="optional" />
+						<xs:attribute name="style" use="optional">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="_classic_test"/>
+									<xs:enumeration value="bmh"/>
+									<xs:enumeration value="classic"/>
+									<xs:enumeration value="dark_background"/>
+									<xs:enumeration value="default"/>
+									<xs:enumeration value="fast"/>
+									<xs:enumeration value="fivethirtyeight"/>
+									<xs:enumeration value="ggplot"/>
+									<xs:enumeration value="grayscale"/>
+									<xs:enumeration value="seaborn"/>
+									<xs:enumeration value="seaborn-bright"/>
+									<xs:enumeration value="seaborn-colorblind"/>
+									<xs:enumeration value="seaborn-dark"/>
+									<xs:enumeration value="seaborn-dark-palette"/>
+									<xs:enumeration value="seaborn-darkgrid"/>
+									<xs:enumeration value="seaborn-deep"/>
+									<xs:enumeration value="seaborn-muted"/>
+									<xs:enumeration value="seaborn-notebook"/>
+									<xs:enumeration value="seaborn-paper"/>
+									<xs:enumeration value="seaborn-pastel"/>
+									<xs:enumeration value="seaborn-poster"/>
+									<xs:enumeration value="seaborn-talk"/>
+									<xs:enumeration value="seaborn-ticks"/>
+									<xs:enumeration value="seaborn-white"/>
+									<xs:enumeration value="seaborn-whitegrid"/>
+									<xs:enumeration value="Solarize_Light2"/>
+									<xs:enumeration value="tableau-colorblind10"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="fontSize" type="xs:unsignedByte" use="optional" />
+						<xs:attribute name="fontFamily" type="xs:string" use="optional" />
+						<xs:attribute name="font" type="xs:string" use="optional" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="plottingOptions">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="emissions">
+								<xs:complexType>
+									<xs:attribute name="plot" type="xs:boolean" use="required" />
+									<xs:attribute name="location" type="xs:string" use="required" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="trends">
+								<xs:complexType>
+									<xs:attribute name="plot" type="xs:boolean" use="required" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="timeEvolution">
+								<xs:complexType>
+									<xs:attribute name="plot" type="xs:boolean" use="required" />
+									<xs:attribute name="steadyVariablesFile" type="xs:string" use="optional" />
+									<xs:attribute name="transientVariablesFile" type="xs:string" use="optional" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="experimentalProcessing">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="inputFile">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="category" use="required" >
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:enumeration value="calmecAverages"/>
+														<xs:enumeration value="experimentalRaw"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="outputFile" type="xs:string" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="simulationProcessing">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="settings">
+								<xs:complexType>
+									<xs:attribute name="roomTempConditions" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="warm"/>
+												<xs:enumeration value="cold"/>
+												<xs:enumeration value="ambient"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="modelNamePrefix" type="xs:string" use="required" />
+									<xs:attribute name="xmlCase" type="xs:string" use="required" />
+									<xs:attribute name="simulationMode" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="testbench"/>
+												<xs:enumeration value="N-T"/>
+												<xs:enumeration value="N-mf"/>
+												<xs:enumeration value="vehicle"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="simulationPath" type="xs:string" use="optional" />
+									<xs:attribute name="processingPath" type="xs:string" use="optional" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="transient">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="divisions" minOccurs="0" maxOccurs="1" >
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element maxOccurs="unbounded" name="division">
+														<xs:complexType>
+															<xs:attribute name="name" type="xs:string" use="required" />
+															<xs:attribute name="start" type="xs:float" use="required" />
+															<xs:attribute name="end" type="xs:float" use="required" />
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="errorEvaluation" minOccurs="0" maxOccurs="1" >
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element maxOccurs="unbounded" name="error">
+														<xs:complexType>
+															<xs:attribute name="pointsPercentage" type="xs:float" use="required" />
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="experimentalPath" type="xs:string" use="required" />
+									<xs:attribute name="variablesFile" type="xs:string" use="required" />
+									<xs:attribute name="simTime" type="xs:unsignedInt" use="optional" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="steady">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="cases">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element maxOccurs="unbounded" name="case">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="nomenclature">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element minOccurs="1" maxOccurs="unbounded" name="labelPart">
+																				<xs:complexType>
+																					<xs:attribute name="property" use="required">
+																						<xs:simpleType>
+																							<xs:restriction base="xs:string">
+																								<xs:enumeration value="speed"/>
+																								<xs:enumeration value="load"/>
+																								<xs:enumeration value="torque"/>
+																								<xs:enumeration value="roomTemperature"/>
+																								<xs:enumeration value="repetition"/>
+																								<xs:enumeration value="date"/>
+																								<xs:enumeration value="BMEP"/>
+																								<xs:enumeration value="EGR"/>
+																								<xs:enumeration value="undefined"/>
+																							</xs:restriction>
+																						</xs:simpleType>
+																					</xs:attribute>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="name" type="xs:string" use="required" />
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="averagingPercentage" type="xs:unsignedByte" use="optional" />
+									<xs:attribute name="experimentalFile" type="xs:string" use="required" />
+									<xs:attribute name="variablesAverageFile" type="xs:string" use="required" />
+									<xs:attribute name="variablesInstantaneousFile" type="xs:string" use="required" />
+									<xs:attribute name="calmecInstantaneousPath" type="xs:string" use="required" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

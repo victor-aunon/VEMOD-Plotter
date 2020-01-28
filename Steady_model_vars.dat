@@ -1,0 +1,47 @@
+Print	Name	Mod_column	Legend	Units	Conv_factor
+yes	Turbo Temperatures	Turbocharger/Turbocharger-1/Tempeature/Node_T[degC]	Node_T	degC	1
+yes	Turbo Temperatures	Turbocharger/Turbocharger-1/Tempeature/Node_H1[degC]	Node_H1	degC	1
+yes	Turbo Temperatures	Turbocharger/Turbocharger-1/Tempeature/Node_H2[degC]	Node_H2	degC	1
+yes	Turbo Temperatures	Turbocharger/Turbocharger-1/Tempeature/Node_H3[degC]	Node_H3	degC	1
+yes	Turbo Temperatures	Turbocharger/Turbocharger-1/Tempeature/Node_C[degC]	Node_C	degC	1
+yes	Turbocharger Speed	Turbocharger/Turbocharger-1/Speed[rpm]		krpm	1e-3
+yes	Cyl. Temperatures	Cylinder/Cylinder-1/PistonTemperature[degC]	Piston	degC	1
+yes	Cyl. Temperatures	Cylinder/Cylinder-1/LinerTemperature[degC]	Liner	degC	1
+yes	Cyl. Temperatures	Cylinder/Cylinder-1/CylinderHeadTemperature[degC]	Cylinder Head	degC	1
+yes	Turbo Heats	Turbocharger/Turbocharger-1/Heat/ToAmbient[kW]	To Ambient	kW	1
+yes	Turbo Heats	Turbocharger/Turbocharger-1/Heat/ToOil[kW]	To Oil	kW	1
+yes	Turbo Heats	Turbine/Turbine-1/Heat[kW]	Turbine	kW	1
+yes	Turbo Heats	Compressor/Compressor-1/Heat[kW]	Compressor	kW	1
+yes	Cyl. Coolant Temp.	Cylinder/Cylinder-1/CoolantTemperature[degC]	Inlet	degC	1
+yes	Cyl. Coolant Temp.	Cylinder/Cylinder-1/CoolantOutletTemp[degC]	Outlet	degC	1
+yes	Cyl. Oil Temp.	Cylinder/Cylinder-1/OilTemperature[degC]		degC	1
+yes	Exhaust Mani. Temp.	Plenum/ExhaustManifold-1/WallTemperature[degC]		degC	1
+yes	Cyl. Coolant Flow	HydrCircuit/MainCoolantCircuit/Cylinder-1/Flow[L/min]	Cylinder-1	L/min	1
+yes	Cyl. Coolant Flow	HydrCircuit/MainCoolantCircuit/Cylinder-2/Flow[L/min]	Cylinder-2	L/min	1
+yes	Cyl. Coolant Flow	HydrCircuit/MainCoolantCircuit/Cylinder-3/Flow[L/min]	Cylinder-3	L/min	1
+yes	Cyl. Coolant Flow	HydrCircuit/MainCoolantCircuit/Cylinder-4/Flow[L/min]	Cylinder-4	L/min	1
+yes	Thermostat Opening	HydrCircuit/MainCoolantCircuit/RadiatorThermostat/Opening[0-1]		0-1	1
+yes	Thermostat RefTemp.	HydrCircuit/MainCoolantCircuit/RadiatorThermostat/RefTemp[degC]		degC	1
+yes	Cyl. Head Coolant In Temp.	HydrCircuit/MainCoolantCircuit/CylinderHead-1/InletTemp[degC]	CylinderHead-1	degC	1
+yes	Cyl. Head Coolant In Temp.	HydrCircuit/MainCoolantCircuit/CylinderHead-2/InletTemp[degC]	CylinderHead-2	degC	1
+yes	Cyl. Head Coolant In Temp.	HydrCircuit/MainCoolantCircuit/CylinderHead-3/InletTemp[degC]	CylinderHead-3	degC	1
+yes	Cyl. Head Coolant In Temp.	HydrCircuit/MainCoolantCircuit/CylinderHead-4/InletTemp[degC]	CylinderHead-4	degC	1
+yes	Air Mass Flow	Pipe/AirFilterOutlet/0.010m/MassFlow[kg/s]		kg/h	3600
+yes	Heat Accum. Structure	Cylinder/Cylinder-1/HeatAccumStructure[kW]	Cylinder-1	kW	1
+yes	Heat Accum. Structure	Cylinder/Cylinder-2/HeatAccumStructure[kW]	Cylinder-2	kW	1
+yes	Heat Accum. Structure	Cylinder/Cylinder-3/HeatAccumStructure[kW]	Cylinder-3	kW	1
+yes	Heat Accum. Structure	Cylinder/Cylinder-4/HeatAccumStructure[kW]	Cylinder-4	kW	1
+yes	Turbine rack	ECU/Actuator-1[-]	Actuator-1	0-100	1
+yes	HPEGR valve lift	ECU/Actuator-2[-]	Actuator-2	0-1	1
+yes	Engine speed	ECU/Actuator-3[-]	Actuator-3	rpm	9.549
+yes	Injection pressure	ECU/Actuator-4[-]	Actuator-4	bar	1E-5
+yes	SOE 1	ECU/Actuator-5[-]	Actuator-5	cad	57.296
+yes	mf 1	ECU/Actuator-6[-]	Actuator-6	mg	1e6
+yes	SOE 2	ECU/Actuator-7[-]	Actuator-7	cad	57.296
+yes	mf 2	ECU/Actuator-8[-]	Actuator-8	mg	1e6
+yes	SOE 3	ECU/Actuator-9[-]	Actuator-9	cad	57.296
+yes	mf3	ECU/Actuator-10[-]	Actuator-10	mg	1e6
+yes	Exhaust valve lift	ECU/Actuator-11[-]	Actuator-11	0-1	1
+yes	LPEGR valve lift	ECU/Actuator-12[-]	Actuator-12	0-1	1
+yes	WCAC target temp.	ECU/Actuator-13[-]	Actuator-13	K	1
+

@@ -1,0 +1,54 @@
+Print	Name	Ref_column	Mod_column	Units	ModToRef_factor	Ymin	Ymax	Tau
+Yes	Engine Speed	DynoSpeed	Engine/EngineSpeed[rpm]	rpm	1	NA	NA	0
+Yes	Torque	DynoTorque	Engine/BrakeTorque[Nm]	Nm	1	NA	NA	0
+Yes	Accum. Brake Energy	-	-	kJ	1	NA	NA	0
+Yes	Accum. Injected Energy	-	-	kJ	1	NA	NA	0
+Yes	Air Mass Flow	Air_mass_inca_corr_g_s	Pipe/Intake/0.010m/MassFlow[kg/s]	g/s	1000	NA	NA	0
+Yes	LP-EGR Mass Flow	EGR_mass_LP_g_s	Pipe/LPEGRCoolerInlet/0.990m/MassFlow[kg/s]	g/s	1000	NA	NA	10
+Yes	LP-EGR Accum. Mass	EGR_mass_LP_g_s	Pipe/LPEGRCoolerInlet/0.990m/MassFlow[kg/s]	g	1000	NA	NA	10
+Yes	Test Cell Temp.	T_sala_1	Pipe/Intake/0.010m/Temperature[degC]/Static	degC	1	NA	NA	0
+Yes	Compressor In. Temp.	T_E_Comp	Pipe/CompressorInlet/0.990m/Temperature[degC]/Static	degC	1	NA	NA	10
+Yes	Compressor Out. Temp.	T_S_Comp	Pipe/CompressorOutlet/0.010m/Temperature[degC]/Static	degC	1	NA	NA	10
+No	WCAC Inlet Temperature	T_E_WCAC	Plenum/WCACInlet-1/Temperature[degC]	degC	1	NA	NA	10
+No	Vxx_tia_1	Vxx_tia_1	Plenum/WCACInlet-1/Temperature[degC]	degC	1	NA	NA	0
+Yes	WCAC Outlet Temperature	T_adm_media	Plenum/WCACOutlet-1/Temperature[degC]	degC	1	NA	NA	10
+Yes	WCAC Heat	T_S_Comp,T_adm_media	Pipe/CompressorOutlet/0.010m,Plenum/WCACInlet-1,Plenum/WCACOutlet-1	kW	1	NA	NA	0
+Yes	WCAC Accum. Energy	T_S_Comp,T_adm_media	Pipe/CompressorOutlet/0.010m,Plenum/WCACInlet-1,Plenum/WCACOutlet-1	kJ	1	NA	NA	0
+No	HP-EGR Inlet Temperature	T_E_EGR	Pipe/HPEGROutlet/0.050m/Temperature[degC]/Static	degC	1	NA	NA	0
+Yes	Turbine In. Temp.	T_E_Turb	Pipe/TurbineInlet/0.990m/Temperature[degC]/Static	degC	1	NA	NA	10
+Yes	Turbine Out. Temp.	T_S_Turb	Pipe/TurbineOutlet/0.010m/Temperature[degC]/Static	degC	1	NA	NA	10
+Yes	Oil Temperature	T_Oil1	HydrCircuit/OilCircuit-1/ObjectTemp[degC]/pipe/OilCoolerOutlet	degC	1	NA	NA	0
+No	Coolant Engine In. Temp.	T_E_W_Mot	HydrCircuit/CoolantCircuit-1/ObjectTemp[degC]/pipe/PumpOutlet	degC	1	NA	NA	0
+Yes	Coolant Engine Out. Temp.	T_S_W_Mot	HydrCircuit/CoolantCircuit-1/ObjectTemp[degC]/pipe/EngineValveInlet	degC	1	NA	NA	0
+Yes	Coolant LP-EGR Out. Temp.	T_S_W_EGRLP	HydrCircuit/CoolantCircuit-1/ObjectTemp[degC]/pipe/EGR_LP_CoolerOutlet	degC	1	NA	NA	0
+Yes	LP-EGR Inlet Temperature	T_E_INT_EGRLP	Pipe/LPEGRCoolerInlet/0.990m/Temperature[degC]/Static	degC	1	NA	NA	10
+Yes	LP-EGR Outlet Temperature	T_S_INT_EGRLP	Pipe/LPEGRCoolerOutlet/0.990m/Temperature[degC]/Static	degC	1	NA	NA	10
+Yes	T_S_EGRLP	T_S_EGRLP	Pipe/LPEGRCoolerOutlet/0.010m/Temperature[degC]/Static	degC	1	NA	NA	0
+Yes	LP-EGR Cooler Heat	T_E_INT_EGRLP,T_S_INT_EGRLP	Pipe/LPEGRCoolerInlet/0.990m,Pipe/LPEGRCoolerInlet/0.990m,Pipe/LPEGRCoolerOutlet/0.010m	kW	1	NA	NA	0
+Yes	LP-EGR Cooler Accum. Energy	T_E_INT_EGRLP,T_S_INT_EGRLP	Pipe/LPEGRCoolerInlet/0.990m,Pipe/LPEGRCoolerInlet/0.990m,Pipe/LPEGRCoolerOutlet/0.010m	kJ	1	NA	NA	0
+No	Exhaust line Temperature	T_S_FAP	Pipe/Exhaust/0.010m/Temperature[degC]/Static	degC	1	NA	NA	0
+Yes	Test Cell Pressure	P_sala	Pipe/Intake/0.010m/Pressure[bar]/Static	bar	1	NA	NA	0
+Yes	LP-EGR Outlet Pressure	P_S_EGRLP	Pipe/LPEGRCoolerOutlet/0.990m/Pressure[bar]/Static	bar	1	NA	NA	0
+Yes	Compressor Inlet Pressure	P_E_Comp	Pipe/CompressorInlet/0.990m/Pressure[bar]/Static	bar	1	NA	NA	0
+Yes	Turbine In. Pressure	P_E_Turb	Pipe/TurbineInlet/0.990m/Pressure[bar]/Static	bar	1	NA	NA	0
+Yes	Turbine Out. Pressure	P_S_Turb	Pipe/TurbineOutlet/0.010m/Pressure[bar]/Static	bar	1	NA	NA	0
+Yes	HP-EGR Outlet Pressure	P_S_EGR	Pipe/HPEGROutlet/0.050m/Pressure[bar]/Static	bar	1	NA	NA	0
+Yes	Coolant Flow	Q_Mot	HydrCircuit/CoolantCircuit-1/CoolantCooler/Flow[L/min]	l/min	1	NA	NA	0
+Yes	Q_WCAC	Q_WCAC	HydrCircuit/CoolantCircuit-1/CoolantCooler/Flow[L/min]	l/min	1	NA	NA	0
+Yes	Turbocharger Speed	rpm_turbo	Turbocharger/Turbocharger-1/Speed[rpm]	rev/min	1	NA	NA	0
+Yes	COH	COH	CO	%vol	1	NA	NA	0
+Yes	CO2	CO2	CO2	%vol	1	NA	NA	0
+Yes	THC	THC	THC	ppm	1	NA	NA	0
+Yes	O2	O2	O2	%vol	1	NA	NA	0
+Yes	NOx	NOx_total	NOx	ppm	1	NA	NA	0
+No	A_F	A_F	Engine/AFR[-]	-	1	NA	NA	0
+No	EGR Rate	EGR_Rate	Engine/EGR_Rate[-]	%	100	0	100	0
+Yes	Compressor Out. P.	ASMod_pIntMnf_1	Pipe/CompressorOutlet/0.010m/Pressure[bar]/Static	mbar	1000	NA	NA	0
+Yes	Fuel Mass	mftotal_inca_corr_kvar	Engine/FuelMassCylinder&Cycle[mg]	mg	1	NA	NA	0
+No	IMEP	pmitotal	Engine/IMEP[bar]	bar	1	NA	NA	0
+No	BMEP	pmbt	Engine/PMEP[bar]	bar	1	NA	NA	0
+No	NMEP	pminet	Engine/NMEP[bar]	bar	1	NA	NA	0
+No	FMEP	pmpm	Engine/FMEP[bar]	bar	1	NA	NA	0
+Yes	VGT Position	Vxx_vnt_pwm_1	ECU/Actuator-1[-]	%	1	0	101	0
+Yes	Exh. Throttle	Vxx_et_abs_psn_1	ECU/Actuator-11[-]	%	100	0	101	0
+Yes	LP-EGR Valve	Vxx_lpev_psn_rel_1	ECU/Actuator-12[-]	%	100	0	101	0

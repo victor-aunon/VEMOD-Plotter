@@ -1,0 +1,122 @@
+p {
+    margin-bottom: 0.25rem;
+}
+
+dt {
+    font-size: 1.5rem;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+.line {
+    height: 2px;
+    border-bottom: 1px dashed #7c7c7c;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#sidebar {
+    width: 270px;
+    padding-left: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: midnightblue;
+    color: #fff;
+}
+
+#sidebar a {
+    color: whitesmoke;
+}
+
+#sidebar a:active, #sidebar  a:hover {
+    color: khaki;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#sidebar hr {
+    border-color: gray;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 20px;
+}
+
+#content {
+    width: 70%;
+    margin-left: 290px;
+    margin-right: 20px;
+    text-align: justify;
+}
+
+#whatsNew {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: wheat;
+    color: navy;
+    border: 2px dotted red;
+}
+
+.recommendation {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: lightyellow;
+}
+
+.recommendation h5 {
+    font-style: italic;
+}
+
+.dir-tree {
+    font-family: 'Courier New', Courier, monospace;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: lightyellow;
+}
+
+.dir-tree p {
+    margin-bottom: -2px;
+}
+
+.dir-tree-explanation {
+    color: orangered;
+}
+
+.float-button {
+    position: fixed;
+    text-align: center;
+    width: 95px;
+    background-color: RoyalBlue;
+    padding: 10px;
+    border-radius: 20px;
+    right: 1%;
+    top: 90%;
+    transition: all 0.2s ease-in 0s;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+.float-button a {
+    color: whitesmoke;
+}
+
+.float-button a:active, .float-button  a:hover {
+    color: whitesmoke;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.table .thead-dark th {
+    background-color: navy;
+    border-color: navy;
+}
+
+pre[class*="language-"] {
+    padding: 0px;
+}

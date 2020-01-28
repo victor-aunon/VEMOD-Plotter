@@ -1,0 +1,54 @@
+Print	Name	Ref_column	Mod_column	Units	ModToRef_factor	Ymin	Ymax
+Yes	Engine torque	DynoTorque	Engine/BrakeTorque[Nm]	Nm	1	0	400
+Yes	Engine power	DynoPower	Engine/BrakePower[kW]	Kw	1	0	NA
+Yes	Boost pressure	ASMod_pIntMnf_1	Pipe/CompressorOutlet/1.710m/Pressure[bar]/Static	mbar	1000	1000	NA
+Yes	Turbine Inlet Pressure	P_E_Turb	Pipe/TurbineInlet/0.010m/Pressure[bar]/Static	bar	1	1	NA
+Yes	Turbine Inlet Temperature	T_E_Turb	Pipe/TurbineInlet/0.010m/Temperature[degC]/Static	degC	1	0	1000
+Yes	WCAC Outlet Temperature	T_adm_media	Plenum/WCACOutlet-1/Temperature[degC]	degC	1	NA	NA
+Yes	Mass Flow	M_Aire	Pipe/AirFilterOutlet/0.010m/MassFlow[kg/s]	Kg/h	3600	0	450
+Yes	EGR Mass Flow	MEGR	Pipe/LPEGRCoolerOutlet/0.010m/MassFlow[kg/s]	Kg/h	3600	0	NA
+Yes	EGR Rate	EGR	Pipe/LPEGRCoolerOutlet/0.010m/MassFlow[kg/s]	%	1	0	60
+Yes	Oil Temperature	T_Oil1	HydrCircuit/OilCircuit-1/ObjectTemp[degC]/pipe/OilCoolerOutlet	degC	1	80	120
+Yes	Oil Cooler Flow	Vxx_et_psn_raw_mv_tot_1	HydrCircuit/OilCircuit-1/OilCooler/Flow[L/min]	L/min	1	NA	NA
+Yes	Coolant Temperature	T_S_W_Mot	HydrCircuit/CoolantCircuit-1/ObjectTemp[degC]/pipe/EngineValveInlet	degC	1	75	100
+Yes	Heat to the walls	CALMEC/HeatTransfered[kW]	Engine/HeatTransfered[kW]	kW	-1	NA	NA
+Yes	Turbine Outlet Temperature	T_S_Turb	Pipe/TurbineOutlet/0.010m/Temperature[degC]/Static	degC	1	1	NA
+Yes	IMEP	 Presión_media_indicada_h.p.(bar)	Engine/IMEP[bar]	bar	1	NA	NA
+Yes	Maximum Pressure	 Presión_máxima(bar)	Cylinder/Cylinder-1/MaximumPressure[bar]	bar	1	NA	NA
+Yes	Maximum Temperature	 Temperatura_máxima(ºC)	Cylinder/Cylinder-1/MaximumTemperature[degC]	degC	1	NA	NA
+Yes	Cylinder Head Temperature	 Temperatura_media_de_la_culata(ºC)	Cylinder/Cylinder-1/CylinderHeadTemperature[degC]	degC	1	NA	NA
+Yes	Liner Temperature	 Temperatura_media_del_cilindro(ºC)	Cylinder/Cylinder-1/LinerTemperature[degC]	degC	1	NA	NA
+Yes	Piston Temperature	 Temperatura_media_del_pistón(ºC)	Cylinder/Cylinder-1/PistonTemperature[degC]	degC	1	NA	NA
+Yes	Pressure at IVC	 Presión_en_el_cierre_de_la_Admisión(bar)	Cylinder/Cylinder-1/PressureAtIVC[bar]	bar	1	1	NA
+Yes	Temperature at IVC	 Temperatura_al_cierre_de_la_admisión(ºC)	Cylinder/Cylinder-1/TemperatureAtIVC[degC]	degC	1	NA	NA
+Yes	Volumetric Efficiency	vol_eff	Engine/IntakeVolEffRefTo_[-]	-	1	NA	NA
+Yes	Turbine Outlet Pressure	P_S_Turb	Pipe/TurbineOutlet/0.010m/Pressure[bar]/Static	bar	1	1	NA
+Yes	Compressor Inlet Temperature	T_E_Comp	Pipe/CompressorInlet/0.990m/Temperature[degC]/Static	degC	1	NA	NA
+Yes	Compressor Outlet Temperature	T_S_Comp	Pipe/CompressorOutlet/0.010m/Temperature[degC]/Static	degC	1	NA	NA
+Yes	Compressor Inlet Pressure	P_E_Comp	Pipe/CompressorInlet/0.010m/Pressure[bar]/Static	bar	1	0.8	1.2
+Yes	Compressor Outlet Pressure	ASMod_pIntMnf_1	Pipe/CompressorOutlet/0.010m/Pressure[bar]/Static	mbar	1000	1000	NA
+Yes	EGRLP Cooler Outlet Temperature	T_S_INT_EGRLP	Pipe/LPEGRCoolerOutlet/0.010m/Temperature[degC]/Static	degC	1	NA	NA
+Yes	EGRLP Cooler Inlet Temperature	T_E_INT_EGRLP	Pipe/LPEGRCoolerInlet/0.990m/Temperature[degC]/Static	degC	1	NA	NA
+Yes	Fuel Mass	MF	Engine/FuelMassCylinder&Cycle[mg]	mg	1.00E+00	NA	NA
+Yes	Turbocharger Speed	rpm_turbo	Turbocharger/Turbocharger-1/Speed[rpm]	krpm	1e-3	NA	NA
+Yes	Turbocharger Power	-	-	kW	1	0	NA
+Yes	Turbocharger Heat Power	-	-	kW	1	0	NA
+Yes	Turbocharger efficiency	-	-	kW	1	0	NA
+No	Apparent Comb Eff	 Parámetro_CALMEC(%)	Engine/HeatBurned[kW]	-	1	80	120
+Yes	Effective Efficiency	effective_eff	Engine/EffectiveEfficiency[-]	-	1	0	NA
+Yes	Indicated Efficiency	 Rendimiento_indicado_h.p.(%)	Engine/IndicatedEfficiency[-]	%	100	NA	NA
+Yes	O2 at EVO	 Oxígeno_Calculado_(%)	Engine/MassFractionAtEVO[-]/O2	%	100	NA	NA
+Yes	Oil Pump Power	 Potencia_de_accionamiento_de_la_bomba_de_aceite_[W]	Engine/OilPumpsPower[kW]	W	-1000	NA	NA
+Yes	Coolant Pump Power	 Potencia_de_accionamiento_de_la_bomba_del_refrigerante_[kW]	Engine/CoolantPumpsPower_CoolantCircuit-1[kW]	W	-1000	NA	NA
+Yes	Bearings Friction	 Potencia_de_fricción_en_los_cojinetes_[W]	Cylinder/Cylinder-1/BearingFrictionPower[kW]	W	-1000	NA	NA
+Yes	Valve Train Friction	 Potencia_de_fricción_en_la_distribución_[kW]	Cylinder/Cylinder-1/ValveTrainFrictionPower[kW]	W	-1000	NA	NA
+Yes	Rings+Piston Friction	 Potencia_de_fricción_en_el_pistón-anillos_[W]	Cylinder/Cylinder-1/S1FrictionPower[kW]	W	-1000	NA	NA
+Yes	Fuel Pump Power	 Potencia_de_accionamiento_de_la_bomba_de_combustible_[W]	Engine/FuelPumpsPower[kW]	W	-1000	NA	NA
+Yes	Fuel Power	 Potencia_del_combustible_(kW)	Engine/HeatInjected[kW]	kW	0.25	NA	NA
+Yes	Heat to oil	 Potencia_térmica_transimitida_al_aceite_(kW)	Cylinder/Cylinder-1/HeatToOil[kW]	kW	1	NA	NA
+Yes	Heat to coolant	 Potencia_térmica_transmitida_al_refrigerante_(kW)	Cylinder/Cylinder-1/HeatToCoolant[kW]	kW	1	NA	NA
+No	FMEP	 Presión_media_de_pérdidas_mecánicas(bar)	Engine/FMEP[bar]	bar	-1	NA	NA
+Yes	PMEP	 Presión_media_indicada_l.p.(bar)	Engine/PMEP[bar]	bar	1	NA	NA
+Yes	Friction + Auxiliaries	 Presión_media_de_pérdidas_mecánicas(bar)	-	bar	1	0	NA
+Yes	VGT Position	Vxx_vnt_pwm_1	ECU/Actuator-1[-]	-	1	0	100
+Yes	Injected fuel	-	-	mg	1	0	NA

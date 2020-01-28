@@ -1,0 +1,13 @@
+Print	Name	Ref_column	Mod_column	Mod_legend	Exp_legend	Units	K_mod	K_exp	Xmin	Xmax
+Yes	Pressure	presion(bar)	Cylinder/Cylinder-2/Pressure[bar]	VEMOD	Experiment	bar	1	1	-120	120
+Yes	Temperature	temperatura(ºC)	Cylinder/Cylinder-2/Temperature[degC]	VEMOD	Calmec	degC	1	1	-120	120
+Yes	Heat	Qw(J/cad)	Cylinder/Cylinder-2/ConvectiveHeatPower[kW]	VEMOD	Calmec	kW	1	0.006	-120	120
+Yes	Heat Release NonDim	fql(-)	Cylinder/Cylinder-2/HeatReleaseLaw[-]	VEMOD	Calmec	-	1	1	-120	120
+Yes	Heat Release	fql_no_adim(J)	Cylinder/Cylinder-2/HeatReleaseLaw[-]	VEMOD	Calmec	J	1	1	-120	120
+Yes	Mass	masa_instantanea(kg)	Cylinder/Cylinder-2/Mass[g]	VEMOD	Calmec	g	1	1000	-120	120
+Yes	Heat Trans Coef	hgas(W/m2K)	Cylinder/Cylinder-2/HeatTransferCoef[W/m^2K]	VEMOD	Calmec	W/m^2K	1	1	-120	120
+Yes	BlowBy	masa_bb(kg)	Cylinder/Cylinder-2/Blow-By[g/s]	VEMOD	Calmec	g/s	1	-12000	-120	120
+Yes	Injected Fuel (pulses)	masa_iny(kg)	Cylinder/Cylinder-2/FuelMassRate[g/s]	VEMOD	Calmec	g/s	1	10000000	-40	40
+Yes	Gamma	Gamma(-)	Cylinder/Cylinder-2/RatioHeatCapacity[-]	VEMOD	Calmec	-	1	1	-120	120
+Yes	Fuel	-	Cylinder/Cylinder-2/Combustion/InjectedFuel[mg]	-	-	mg	1	1	-120	120
+Yes	Fuel injected - burned norm. vs O2	-	Cylinder/Cylinder-2/Combustion/InjectedFuel[mg]	-	-	-	1	1	0	0.3

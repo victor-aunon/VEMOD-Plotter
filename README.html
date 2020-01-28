@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VEMOD Plotter User Guide</title>
+    <meta name="author" content="Angel Auñon">
+
+    <!-- CSS imports -->
+    <link rel="stylesheet" href="./resources/guide/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="./resources/guide/css/prism.css" >
+    <link rel="stylesheet" href="./resources/guide/css/styles.css" >
+</head>
+<body>
+    <div class="wrapper">
+
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3 style="text-align: center; margin-left: -20px; margin-top: 10px;"><strong>VEMOD Plotter</strong></h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <h5 style="text-align: center; margin-left: -20px;">User guide</h5>
+                <br>
+                <li>
+                    <a href="#whatsNew"><strong>What's new in v2.0.0?</strong></a>
+                </li>
+                <hr>
+                <li>
+                    <a href="#setup">Setting up the program</a>
+                </li>
+                <li>
+                    <a href="#configFile" >The configuration file</a>
+                    <ul class="list-styled" id="XX">
+                        <li>
+                            <a href="#engine">Engine</a>
+                        </li>
+                        <li>
+                            <a href="#plotStyles">Plot styles</a>
+                        </li>
+                        <li>
+                            <a href="#plottingOptions">Plotting options</a>
+                        </li>
+                        <li>
+                            <a href="#experimentalProcessing">Experimental processing</a>
+                        </li>
+                        <li>
+                            <a href="#simulationProcessing" >Simulation processing</a>
+                            <ul class="list-styled" id="XX">
+                                <li>
+                                    <a href="#settings">Settings</a>
+                                </li>
+                                <li>
+                                    <a href="#transient" >Transient</a>
+                                    <ul class="list-styled" id="XX">
+                                        <li>
+                                            <a href="#divisions">Divisions</a>
+                                        </li>
+                                        <li>
+                                            <a href="#errorEvaluation">Error evaluation</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#steady" >Steady</a>
+                                    <ul class="list-styled" id="XX">
+                                        <li>
+                                            <a href="#cases">Cases</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                       
+                    </ul>
+                </li>
+                <li>
+                    <a href="#running">Running the program</a>
+                </li>
+                <li>
+                    <a href="#figuresAndSummaries">Figures and summaries</a>
+                </li>
+                <hr>
+                <li>
+                    <a href="#structure">Data structure</a>
+                </li>
+                <li>
+                    <a href="#maintenance">Maintenance</a>
+                </li>
+                <li>
+                    <a href="#changelog">Changelog</a>
+                </li>
+                <hr>
+                <li>
+                    <a href="#contact">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    
+        <!-- Page Content -->
+        <div id="content">
+            <div class="container" id="whatsNew">
+                <h2>What's new in v2.0.0?</h2>
+                <p><i class="fas fa-check-circle"></i> New project structure: one main script for processing all the simulations.
+                Auxiliary functions and classes separated from main script.</p>
+                <p><i class="fas fa-check-circle"></i> Simulation data loading and graphs creation processes are done in parallel multiprocessing.</p>
+                <p><i class="fas fa-check-circle"></i> Resulting graphs now can be stored at any folder. Not necessarily in the local repository.</p>
+                <p><i class="fas fa-check-circle"></i> Different verbosity levels: info and debug.</p>
+                <p><i class="fas fa-check-circle"></i> Improved summary files with more information and better structured.</p>
+                <p><i class="fas fa-check-circle"></i> Full documentation available for functions and files.</p>
+                <p><i class="fas fa-check-circle"></i> Configuration file moved to XML format with more parameters and greater independence of the engine type. It also includes an XML checker that look for problems in the configuration file.</p>
+                <p><i class="fas fa-check-circle"></i> Better file sorting method.</p>
+                <p><i class="fas fa-check-circle"></i> Better identification of steady-state test names.</p>
+                <p><i class="fas fa-check-circle"></i> Transient tests can be evaluated by sections.</p>
+                <p><i class="fas fa-check-circle"></i> Homogenization of variable input files.</p>
+            </div>
+
+            <div class="line"></div>
+
+            <h2 id="setup">Setting up the program</h2>
+            <dl>
+                <dt>Python</dt>
+                <dd>1. Install or create a new <strong>3.5.X</strong> or higher python environment. Make sure that <strong>tkinter</strong> and <strong>pip</strong> are included in your installation.</dd>
+                <div class="container recommendation">
+                    <h5>Recommendation</h5>
+                    <p>Create a new environment based on your current Python version by running <code>python -m venv &ltmy_virtual_environment&gt</code> in the folder you want to create the new environment.</p>
+                </div>
+                <dd>2. Install the required packages for running VEMOD Plotter by running <mark><code>pip install -r requirements.txt</code></mark>. Where   <strong>requirements.txt</strong> is the file located in <mark>/NewLauncher/python_plotters</mark>.</dd>
+                <div class="container recommendation">
+                    <h5>Warning</h5>
+                    <p>If you want to install the packages in your new python environment, you must activate this environment first by running <code>path/to/&ltmy_new_environment&gt/Scripts/activate</code>.</p>
+                    <p>After that, the next line in the console should be <code>(&ltmy_new_environment&gt) current/path</code></p>
+                    <p>Then, you are able to install the packages by running <code>pip install -r requirements.txt</code></p>
+                </div>
+                <dd>3. Check the console for any possible installation error. To check your installed packages run <mark><code>pip list</code></mark>.</dd>
+            </dl>
+            <dl>
+                <dt>Configuration XML file</dt>
+                <dd>Create a configuration XML file needed for running VEMOD Plotter. The contents of this file are explained in the next paragraph.</dd>
+            </dl>
+    
+            <div class="line"></div>
+    
+            <h2 id="configFile">The configuration file</h2>
+            <p>The configuration file is an XML file required for VEMOD Plotter for processing simulation and experiment data. An example of configuration file is presented below:</p>
+            <pre class="language-xml"><code class="language-xml">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="config.xsd"&gt;
+    &lt;engine pistonDiameter="0.08002" crankRadius="0.0398" fuelPCI="42.92" totalDisplacement="0.0016"
+        cylinders="4" injectionPulses="3"/&gt;
+    &lt;plotStyles lineStyleExp="-" lineStyleModel=":" lineWidthExp="1.5" lineWidthModel="1.5"
+        colorExp="#E24A33" colorModel="#348ABD" labelExp="Reference" labelModel="VEMOD" style="ggplot"
+        fontSize="14" fontFamily="sans-serif" font="DejaVu Sans" /&gt;
+    &lt;plottingOptions&gt;
+        &lt;emissions plot="false" location="Pipe/Exhaust/0.010m" /&gt;
+        &lt;trends plot="true" /&gt;
+        &lt;timeEvolution plot="true" steadyVariablesFile="Steady_model_vars.dat"
+            transientVariablesFile="Transient_model_vars.dat" /&gt;
+    &lt;/plottingOptions&gt;
+    &lt;experimentalProcessing&gt;
+        &lt;inputFile category="calmecAverages"&gt;
+            path/of/steady-state/Resglob.dat
+        &lt;/inputFile&gt;
+        &lt;inputFile category="experimentalRaw"&gt;
+            path/of/steady-state/TodasCombustiones.xlsx
+        &lt;/inputFile&gt;
+        &lt;outputFile&gt;
+            ../INPUT_dataset/medidas_SS/ExperimentalData.xlsx
+        &lt;/outputFile&gt;
+    &lt;/experimentalProcessing&gt;
+    &lt;simulationProcessing&gt;
+        &lt;settings roomTempConditions="ambient" modelNamePrefix="R9M_lab12_" xmlCase="Default"
+            simulationMode="testbench" simulationPath="../User_VEMOD_Model/simulation/results"
+            processingPath="" /&gt;
+        &lt;transient experimentalPath="../INPUT_dataset/medidas_WLTC" 
+            variablesFile="Variables_transient.dat" simTime="1800"&gt;
+            &lt;divisions&gt;
+                &lt;division name="Low" start="0.0" end="589" /&gt;
+                &lt;division name="Medium" start="589" end="1022" /&gt;
+                &lt;division name="High" start="1022" end="1477" /&gt;
+                &lt;division name="Extra High" start="1477" end="1800" /&gt;
+            &lt;/divisions&gt;
+            &lt;errorEvaluation&gt;
+                &lt;error pointsPercentage="50" /&gt;
+                &lt;error pointsPercentage="70" /&gt;
+                &lt;error pointsPercentage="80" /&gt;
+                &lt;error pointsPercentage="90" /&gt;
+                &lt;error pointsPercentage="95" /&gt;
+            &lt;/errorEvaluation&gt;
+        &lt;/transient&gt;
+        &lt;steady averagingPercentage="3" variablesAverageFile="Variables_avg.dat"
+            experimentalFile="../INPUT_dataset/medidas_SS/ExperimentalData.xlsx" 
+            variablesInstantaneousFile="Variables_ins.dat" 
+            calmecInstantaneousPath="path/of/steady-state/Instantaneous" &gt;
+            &lt;cases&gt;
+                &lt;case name="1500_011_h_1"&gt;
+                    &lt;nomenclature&gt;
+                        &lt;labelPart property="speed"/&gt;
+                        &lt;labelPart property="load"/&gt;
+                        &lt;labelPart property="roomTemperature"/&gt;
+                        &lt;labelPart property="repetition"/&gt;
+                    &lt;/nomenclature&gt;
+                &lt;/case&gt;
+                &lt;case name="1500_025_h_2"&gt;
+                    &lt;nomenclature&gt;
+                        &lt;labelPart property="speed"/&gt;
+                        &lt;labelPart property="load"/&gt;
+                        &lt;labelPart property="roomTemperature"/&gt;
+                        &lt;labelPart property="repetition"/&gt;
+                    &lt;/nomenclature&gt;
+                &lt;/case&gt;
+                &lt;case name="1500_050_h_3"&gt;
+                    &lt;nomenclature&gt;
+                        &lt;labelPart property="speed"/&gt;
+                        &lt;labelPart property="load"/&gt;
+                        &lt;labelPart property="roomTemperature"/&gt;
+                        &lt;labelPart property="repetition"/&gt;
+                    &lt;/nomenclature&gt;
+                &lt;/case&gt;
+                &lt;case name="1500_075_h_2"&gt;
+                    &lt;nomenclature&gt;
+                        &lt;labelPart property="speed"/&gt;
+                        &lt;labelPart property="load"/&gt;
+                        &lt;labelPart property="roomTemperature"/&gt;
+                        &lt;labelPart property="repetition"/&gt;
+                    &lt;/nomenclature&gt;
+                &lt;/case&gt;
+                &lt;case name="1500_100_h_1"&gt;
+                    &lt;nomenclature&gt;
+                        &lt;labelPart property="speed"/&gt;
+                        &lt;labelPart property="load"/&gt;
+                        &lt;labelPart property="roomTemperature"/&gt;
+                        &lt;labelPart property="repetition"/&gt;
+                    &lt;/nomenclature&gt;
+                &lt;/case&gt;
+            &lt;/cases&gt;
+        &lt;/steady&gt;
+    &lt;/simulationProcessing&gt;
+&lt;/config&gt;
+            </code></pre>
+            <p>An XML scheme is provided in <mark>/NewLauncher/python_plotters/config.xsd</mark>. This scheme is useful to check the structure of the configuration file and look for errors if you are using an advanced editor.</p>
+
+            <p>The nodes that make up the configuration file are the following:</p>
+
+            <dl>
+                <dt id="engine">Engine</dt>
+                <dd>Includes some engine parameters.</dd>
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Attribute</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Units</th>
+                            <th scope="col">Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>pistonDiameter</td>
+                            <td>float</td>
+                            <td>m</td>
+                            <td>required</td>
+                        </tr>
+                        <tr>
+                            <td>crankRadius</td>
+                            <td>float</td>
+                            <td>m</td>
+                            <td>required</td>
+                        </tr>
+                        <tr>
+                            <td>totalDisplacement</td>
+                            <td>float</td>
+                            <td>m<sup>3</sup></td>
+                            <td>required</td>
+                        </tr>
+                        <tr>
+                            <td>cylinders</td>
+                            <td>unsignedByte</td>
+                            <td>-</td>
+                            <td>required</td>
+                        </tr>
+                        <tr>
+                            <td>injectionPulses</td>
+                            <td>unsignedByte</td>
+                            <td>-</td>
+                            <td>required</td>
+                        </tr>
+                        <tr>
+                            <td>fuelPCI</td>
+                            <td>float</td>
+                            <td>MJ/kg</td>
+                            <td>required</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </dl>
+
+            <dl>
+                <dt id="plotStyles">Plot styles</dt>
+                <dd>Includes some graphic parameters and Matplotlib styles.</dd>
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Attribute</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>lineStyleExp</td>
+                            <td>string</td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>lineStyleModel</td>
+                            <td>string</td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>lineWidthExp</td>
+                            <td>float</td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>lineWidthModel</td>
+                            <td>float</td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>colorExp</td>
+                            <td>string <a href="#noteColor"><sup>1</sup></a></td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>colorModel</td>
+                            <td>string <a href="#noteColor"><sup>1</sup></a></td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>labelExp</td>
+                            <td>string</td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>labelModel</td>
+                            <td>string</td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>style</td>
+                            <td>string <a href="#noteStyle"><sup>2</sup></a></td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>fontSize</td>
+                            <td>unsignedByte</td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>fontFamily</td>
+                            <td>string <a href="#noteFont"><sup>3</sup></a></td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>font</td>
+                            <td>string <a href="#noteFont"><sup>3</sup></a></td>
+                            <td>optional</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p id="noteColor">1. Colors can be specified as their name, hex or decimal code. See <a target="_blank" href="https://matplotlib.org/3.0.3/tutorials/colors/colors.html">how to specify colors in Matplotlib</a> for more information.</p>
+                <p id="noteStyle">2. The Matplotlib styles available are restricted to this <a target="_blank" href="https://matplotlib.org/3.0.3/gallery/style_sheets/style_sheets_reference.html">styles list</a>.</p>
+                <p id="noteFont">3. The font has to be available in your computer. Read <a target="_blank" href="https://matplotlib.org/gallery/api/font_family_rc_sgskip.html"> how to configure the font family</a> for more information.</p>
+            </dl>
+
+            <dl>
+                <dt id="plottingOptions">Plotting options</dt>
+                <dd>Here the user decides to include some graphs in the processing or not.</dd>
+
+                <h4>Emissions</h4>
+                <p>If the <mark><code>plot</code></mark> attribute is set to true, pollutant emissions figures (mass flow and accumulated mass if it is a transient simulation) will be plotted. In this case, an engine location, where the pollutant emissions are measured and available in the simulation results, has to be provided in the <mark><code>location</code></mark> attribute.</p>
+
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Attribute</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>plot</td>
+                            <td>boolean</td>
+                            <td>required</td>
+                        </tr>
+                        <tr>
+                            <td>location</td>
+                            <td>string</td>
+                            <td>required</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h4>Trends</h4>
+                <p>If the <mark><code>plot</code></mark> attribute is set to true, trends figures (model values vs experimental values) will be plotted.</p>
+
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Attribute</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>plot</td>
+                            <td>boolean</td>
+                            <td>required</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h4>Time evolution</h4>
+                <p>If the <mark><code>plot</code></mark> attribute is set to true, model variables will be plotted along the simulation time. In this case, a table file should be provided <a href="#noteTimeEvolution"><sup>4</sup></a>.</p>
+
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Attribute</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>plot</td>
+                            <td>boolean</td>
+                            <td>required</td>
+                        </tr>
+                        <tr>
+                            <td>steadyVariablesFile</td>
+                            <td>string</td>
+                            <td>optional (used just in steady-state)</td>
+                        </tr>
+                        <tr>
+                            <td>transientVariablesFile</td>
+                            <td>string</td>
+                            <td>optional (used just in transient)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p id="noteTimeEvolution">4. The table file with the model variables must have the following columns:</p>
+                <table class="table table-sm table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Column</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Print</td>
+                            <td><strong>yes</strong> or <strong>no</strong> if you want to plot the variable or not.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>The name of the variable as shown in the graphs.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Mod_column</td>
+                            <td style="padding-right: 30px;">The variable column in the simulation results. Different rows with the same variable name can be added with different model columns. This way, several plots will appear in the same graph.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Legend</td>
+                            <td>The variable legend for each <code>Mod_column</code>.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Units</td>
+                            <td>The variable physical units.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Conv_factor</td>
+                            <td>The conversion factor between the model column units and the selected units in the <code>Units</code> column.</td>
+                            <td>float</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>The recommended separator for values is the <strong>tab</strong> and the recommended file extension is <strong>.dat</strong></p>
+            </dl>
+            <br>
+
+            <dl>
+                <dt id="experimentalProcessing">Experimental processing (steady-state only)</dt>
+                <dd>This node consists of three elements required for running the program in <em>experimental</em> mode .</dd>
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Element</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>inputFile</td>
+                            <td style="padding-right: 30px;">There are two input data files defined by the required attribute <mark><code>category</code></mark> (which only can be <mark><code>calmecAverages</code></mark> or <mark><code>experimentalRaw</code></mark>).  <mark><code>calmecAverages</code></mark> contains the CALMEC processed values for each steady-state case, whilst <mark><code>experimentalRaw</code></mark> contains the test bench acquired data for the same steady-state cases.</td> 
+                            <td>string</td>
+                            <td>required</td>
+                        </tr>
+                        <tr>
+                            <td>outputFile</td>
+                            <td style="padding-right: 30px;">Is the name of the resulting reference data file when running the program in <em>experimental</em> mode. This file is required later to plot steady-state graphs. 
+                            <td>string</td>
+                            <td>required</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </dl>
+            <br>
+
+            <dl>
+                <dt id="simulationProcessing">Simulation processing</dt>
+                <dd>This is the most important node of the configuration file. It consists of one general node called settings and two other nodes referring the processing mode (transient or steady-state).</dd>
+
+                <h4 id="settings">Settings</h4>
+                <p>The attributes of this element help the user to find and specify the simulation files.</p>
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Attribute</th>
+                            <th scope="col" class="col-md-5" >Description</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Use</th>
+                            <th scope="col">Restrictions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>roomTempConditions</td>
+                            <td style="padding-right: 20px;">The room temperature conditions of the test bench in order to compare with experimental data.</td>
+                            <td>string</td>
+                            <td>optional</td>
+                            <td>warm, cold or ambient</td>
+                        </tr>
+                        <tr>
+                            <td>modelNamePrefix</td>
+                            <td style="padding-right: 20px;">The beggining of the simulation results file names.</td>
+                            <td>string</td>
+                            <td>required</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>xmlCase</td>
+                            <td style="padding-right: 20px;">The name of the simulated case. It can be found in the <mark><code>Cases</code></mark> node of the model XML file.</td>
+                            <td>string</td>
+                            <td>required</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>simulationMode</td>
+                            <td style="padding-right: 20px;">The simulation mode used if the simulation was run using the Matlab VEMOD Launcher.</td>
+                            <td>string</td>
+                            <td>optional</td>
+                            <td>testbench, N-T, N-mf, vehicle</td>
+                        </tr>
+                        <tr>
+                            <td>simulationPath</td>
+                            <td style="padding-right: 20px;">The path where the simulation results are stored.</td>
+                            <td>string</td>
+                            <td>optional</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>processingPath</td>
+                            <td style="padding-right: 20px;">The path where the processed graphs are saved. If this attribute is missing, the graphs will be stored in the path where VEMOD Plotter is located.</td>
+                            <td>string</td>
+                            <td>optional</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h4 id="transient">Transient</h4>
+                <p>The attributes of this element define the processing of the transient simulations.</p>
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Attribute</th>
+                            <th scope="col" class="col-md-7">Description</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>experimentalPath</td>
+                            <td style="padding-right: 20px;">The path where the transient test bench data files are located.</td>
+                            <td>string</td>
+                            <td>required</td>
+                        </tr>
+                        <tr>
+                            <td>variablesFile</td>
+                            <td style="padding-right: 20px;">The table file where the variables to be plotted are listed with their corresponding column names for model and experiment <a href="#noteVariablesFile"><sup>5</sup></a>.</td>
+                            <td>string</td>
+                            <td>required</td>
+                        </tr>
+                        <tr>
+                            <td>simTime</td>
+                            <td style="padding-right: 20px;">The simulation time (in seconds) of the transient profile.</td>
+                            <td>unsignedInt</td>
+                            <td>optional</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p id="noteVariablesFile">5. The table file with the listed variables must have the following columns:</p>
+                <table class="table table-sm table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Column</th>
+                            <th scope="col" class="col-md-9">Description</th>
+                            <th scope="col">Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Print</td>
+                            <td><strong>yes</strong> or <strong>no</strong> if you want to plot the variable or not.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>The name of the variable as shown in the graphs.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Ref_column</td>
+                            <td style="padding-right: 30px;">The variable column in the experiment results. Some variables require a sequence of columns separated by commas to reduce hard-coding during the processing.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Mod_column</td>
+                            <td style="padding-right: 30px;">The variable column in the simulation results. Some variables require a sequence of columns separated by commas to reduce hard-coding during the processing.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Units</td>
+                            <td>The variable physical units.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>ModToRef_factor</td>
+                            <td style="padding-right: 30px;">The conversion factor between the model column units and the selected units in the <code>Units</code> column, which should match the units of the experimentally measured variable.</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>Ymin</td>
+                            <td style="padding-right: 30px;">The <strong>lower</strong> limit in the Y axis when plotting the variable. Set it to <strong>NA</strong> if you do not want to apply limits.</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>Ymax</td>
+                            <td style="padding-right: 30px;">The <strong>upper</strong>  limit in the Y axis when plotting the variable. Set it to <strong>NA</strong> if you do not want to apply limits.</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>Tau</td>
+                            <td style="padding-right: 30px;">The delay (in engine cycles) when plotting the model signal of the variable. Acts as a rolling average. This is useful to drastically reduce noise of the model signal, which has a greater resolution compared with the experimental signal, e.g., when comparing temperatures measured by a thermocouple. Set it to <strong>0</strong> to keep the original model signal.</td>
+                            <td>float</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>The recommended separator for values is the <strong>tab</strong> and the recommended file extension is <strong>.dat</strong></p>
+                <br>
+
+                <h5 id="divisions"><i class="fas fa-square fa-xs"></i> Divisions</h5>
+                <p>It is possible to divide the transient profile in small divisions. These divisions are visible in the graphs and their are names printed under the X axis. Besides, statistical data regarding this divisions are saved in the transient summary file. Divisions have to be created in the <mark><code>divisions</code></mark> child of the <mark><code>transient</code></mark> element.</p>
+                <pre class="language-xml"><code class="language-xml">
+&lt;divisions&gt;
+    &lt;division name="Low" start="0.0" end="589" /&gt;
+    &lt;division name="Medium" start="589" end="1022" /&gt;
+    &lt;division name="High" start="1022" end="1477" /&gt;
+    &lt;division name="Extra High" start="1477" end="1800" /&gt;
+&lt;/divisions&gt;
+                </code></pre>
+                <table class="table table-sm table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Attribute</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Use</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>name</td>
+                                <td>The name of the division</td>
+                                <td>string</td>
+                                <td>required</td>
+                            </tr>
+                            <tr>
+                                <td>start</td>
+                                <td>The instant when the division starts (in seconds)</td>
+                                <td>float</td>
+                                <td>required</td>
+                            </tr>
+                            <tr>
+                                <td>end</td>
+                                <td>The instant when the division ends (in seconds)</td>
+                                <td>float</td>
+                                <td>required</td>
+                            </tr>
+                        </tbody>
+                </table>
+                <br>
+                <h5 id="errorEvaluation"><i class="fas fa-square fa-xs"></i> Error evaluation</h5>
+                <p>It is possible to evaluate the absolute and relative error of a percentage of the total points along the transient profile. The errors for all the points along the transient are sorted in ascending order. After that, the values corresponding to the percentages of the points are saved in the transient summary file. These percentages have to be defined in the <mark><code>errorEvaluation</code></mark> child of the <mark><code>transient</code></mark> element.</p>
+                <pre class="language-xml"><code class="language-xml">
+&lt;errorEvaluation&gt;
+    &lt;error pointsPercentage="50" /&gt;
+    &lt;error pointsPercentage="70" /&gt;
+    &lt;error pointsPercentage="80" /&gt;
+    &lt;error pointsPercentage="90" /&gt;
+    &lt;error pointsPercentage="95" /&gt;
+&lt;/errorEvaluation&gt;
+                </code></pre>
+                <table class="table table-sm table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Attribute</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Use</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>pointsPercentage</td>
+                                <td>The percentage of points with respect to the total to be evaluated.</td>
+                                <td>float</td>
+                                <td>required</td>
+                            </tr>
+                        </tbody>
+                </table>
+                <br>
+
+                <h4 id="steady">Steady</h4>
+                <p>The attributes of this element define the processing of the steady-state simulations.</p>
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Attribute</th>
+                            <th scope="col" class="col-md-8">Description</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>averagingPercentage</td>
+                            <td style="padding-right: 20px;">The last percentage of values to be considered for each variable. If the simulation time is quite enough to stabilize the mean values, it is faster and more accurate to take the last values for averaging. Default value is <strong>3 %</strong>.</td>
+                            <td>unsignedByte</td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>experimentalFile</td>
+                            <td style="padding-right: 20px;">The Excel file where the reference values are stored. This file is created by running the program in <em>experimental</em> mode.</td>
+                            <td>string</td>
+                            <td>required</td>
+                        </tr>
+                        <tr>
+                            <td>variablesAverageFile</td>
+                            <td style="padding-right: 20px;">The table file where the variables to be plotted are listed with their corresponding column names for model and experiment <a href="#noteVariablesFileAverage"><sup>6</sup></a>. Only used in <em>steady-avg</em> mode.</td>
+                            <td>string</td>
+                            <td>required</td>
+                        </tr>
+                        <tr>
+                            <td>variablesInstantaneousFile</td>
+                            <td style="padding-right: 20px;">The table file where the variables to be plotted are listed with their corresponding column names for model and experiment <a href="#noteVariablesFileInstantaneous"><sup>7</sup></a>. Only used in <em>steady-ins</em> mode.</td>
+                            <td>string</td>
+                            <td>required</td>
+                        </tr>
+                            <td>calmecInstantaneousPath</td>
+                            <td style="padding-right: 20px;">The path where the CALMEC processed files for each steady-state case and cylinder are stored. Only used in <em>steady-ins</em> mode.</td>
+                            <td>string</td>
+                            <td>required</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p id="noteVariablesFileAverage">6. The table file with the listed average variables must have the following columns:</p>
+                <table class="table table-sm table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Column</th>
+                            <th scope="col" class="col-md-9">Description</th>
+                            <th scope="col">Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Print</td>
+                            <td><strong>yes</strong> or <strong>no</strong> if you want to plot the variable or not.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>The name of the variable as shown in the graphs.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Ref_column</td>
+                            <td style="padding-right: 30px;">The variable column in the experiment results.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Mod_column</td>
+                            <td style="padding-right: 30px;">The variable column in the simulation results.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Units</td>
+                            <td>The variable physical units.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>ModToRef_factor</td>
+                            <td style="padding-right: 30px;">The conversion factor between the model column units and the selected units in the <code>Units</code> column, which should match the units of the experimentally measured variable.</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>Ymin</td>
+                            <td style="padding-right: 30px;">The <strong>lower</strong> limit in the Y axis when plotting the variable. Set it to <strong>NA</strong> if you do not want to apply limits.</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>Ymax</td>
+                            <td style="padding-right: 30px;">The <strong>upper</strong>  limit in the Y axis when plotting the variable. Set it to <strong>NA</strong> if you do not want to apply limits.</td>
+                            <td>float</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p id="noteVariablesFileInstantaneous">7. The table file with the listed cylinder variables must have the following columns:</p>
+                <table class="table table-sm table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Column</th>
+                            <th scope="col" class="col-md-9">Description</th>
+                            <th scope="col">Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Print</td>
+                            <td><strong>yes</strong> or <strong>no</strong> if you want to plot the variable or not.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>The name of the variable as shown in the graphs.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Ref_column</td>
+                            <td style="padding-right: 30px;">The variable column in the experiment results.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Mod_column</td>
+                            <td style="padding-right: 30px;">The variable column in the simulation results.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>Units</td>
+                            <td>The variable physical units.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>K_mod</td>
+                            <td style="padding-right: 30px;">The conversion factor between the model column units and the selected units in the <code>Units</code> column.</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>K_exp</td>
+                            <td style="padding-right: 30px;">The conversion factor between the reference column units and the selected units in the <code>Units</code> column.</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>Xmin</td>
+                            <td style="padding-right: 30px;">The <strong>lower</strong> limit in the X axis when plotting the variable. Set it to &asymp;-120 to center the combustion phase.</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>Xmax</td>
+                            <td style="padding-right: 30px;">The <strong>upper</strong>  limit in the X axis when plotting the variable. Set it to &asymp;120 to center the combustion phase.</td>
+                            <td>float</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>The recommended separator for values is the <strong>tab</strong> and the recommended file extension is <strong>.dat</strong> for both files.</p>
+                <br>
+
+                <h5 id="cases"><i class="fas fa-square fa-xs"></i> Cases</h5>
+                <p>The program needs to know which steady-state cases are going to be processed. This cases are identified by an unique name or ID that must match the ones in the <mark><code>experimentalFile</code></mark>, which are the same test names that appear in the processed CALMEC files. This cases have to be defined in the <mark><code>cases</code></mark> child of the <mark><code>steady</code></mark> element.</p></p>
+                <pre class="language-xml"><code class="language-xml">
+&lt;cases&gt;
+    &lt;case name="1000_021_h_2"&gt;
+        &lt;nomenclature&gt;
+            &lt;labelPart property="speed"/&gt;
+            &lt;labelPart property="load"/&gt;
+            &lt;labelPart property="roomTemperature"/&gt;
+            &lt;labelPart property="repetition"/&gt;
+        &lt;/nomenclature&gt;
+    &lt;/case&gt;
+    ...
+&lt;/cases&gt;
+                </code></pre>
+                <p>Test names are typically defined by a sequence of values separated by underscores. In the example above each <mark><code>labelPart</code></mark> defines one of these values:</p>
+                <p style="text-align: center;"><mark><code> &nbsp1000 _ &nbsp021 _ &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsph &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp _ &nbsp&nbsp&nbsp 2 &nbsp&nbsp&nbsp&nbsp</code></mark></p>
+                <p style="text-align: center;"><mark><code>speed _ load _ roomTemperature _ repetition</code></mark></p>
+                <br>
+                <table class="table table-sm table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Attribute</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Use</th>
+                            <th scope="col" style="padding-left: 20px;">Restrictions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>property</td>
+                            <td style="padding-right: 20px;">The property that represents that part of the test name between underscores.</td>
+                            <td>string</td>
+                            <td>required</td>
+                            <td style="padding-left: 20px;">speed, load, torque, roomTemperature, repetition, date, BMEP, EGR or undefined.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>More property types can be added in the scheme. If you are not sure about which property represents each <mark><code>labelPart</code></mark>, use <mark><code>undefined</code></mark> as a wildcard.</p>
+            </dl>
+
+            <div class="line"></div>
+
+            <h2 id="running">Running the program</h2>
+            <p>VEMOD Plotter can be executed in four modes: <em>experimental</em>, <em>steady-avg</em>, <em>steady-ins</em> and <em>transient</em>, and accept different command line arguments.</p>
+
+            <dl>
+                <dt>Experimental mode</dt>
+                <dd>
+                    <p>This mode just processes experimental data and is related to the <mark><code>experimentalProcessing</code></mark> node of the configuration file. Once you run VEMOD Plotter in this mode, an Excel file is created joining all the experimental data for the selected steady-state tests.</p>
+                    <p>Execute the program in this mode by running:</p>
+                    <p style="text-align: center;"><mark><code>python plotter.py &lt;my_configuration_file.xml&gt; experimental [optional arguments]</code></mark></p>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>Steady-avg mode</dt>
+                <dd>
+                    <p>This mode generates different graphs based on the variables' mean values and is related to the <mark><code>steady</code></mark> node of the configuration file.</p>
+                    <p>Execute the program in this mode by running:</p>
+                    <p style="text-align: center;"><mark><code>python plotter.py &lt;my_configuration_file.xml&gt; steady-avg [optional arguments]</code></mark></p>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>Steady-ins mode</dt>
+                <dd>
+                    <p>This mode generates different graphs based on the cylinder variables' instantaneous values and is related to the <mark><code>steady</code></mark> node of the configuration file.</p>
+                    <p>Execute the program in this mode by running:</p>
+                    <p style="text-align: center;"><mark><code>python plotter.py &lt;my_configuration_file.xml&gt; steady-ins [optional arguments]</code></mark></p>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>Transient mode</dt>
+                <dd>
+                    <p>This mode generates different graphs based on the mean values of the variables along the transient cycle and is related to the <mark><code>transient</code></mark> node of the configuration file.</p>
+                    <p>Execute the program in this mode by running:</p>
+                    <p style="text-align: center;"><mark><code>python plotter.py &lt;my_configuration_file.xml&gt; transient [optional arguments]</code></mark></p>
+                </dd>
+            </dl>
+
+            <div class="container recommendation">
+                <h5>Warning</h5>
+                <p>If you created a new python environment, you must activate this environment first by running <code>path/to/&ltmy_new_environment&gt/Scripts/activate</code>.</p>
+                <p>After that, the next line in the console should be <code>(&ltmy_new_environment&gt) current/path</code></p>
+                <p>Then, you are able to run VEMOD Plotter as mentioned above.</p>
+            </div>
+
+            <dl>
+                <dt>Optional arguments</dt>
+                <dd>
+                    <table class="table table-sm table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Argument</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>-h, --help</td>
+                                <td>Displays a help message in the console.</td>
+                            </tr>
+                            <tr>
+                                <td>-V, --version</td>
+                                <td>Shows VEMOD Plotter current version.</td>
+                            </tr>
+                            <tr>
+                                <td>-v, --verbosity</td>
+                                <td>Shows runtime detailed information when running the program. <strong>-v</strong> shows detailed information, while <strong>-vv</strong> shows debug level information.</td>
+                            </tr>
+                            <tr>
+                                <td>--nomultiprocesing</td>
+                                <td>This option disables the multiprocessing feature when loading simulation data and creating graphs. All the tasks are carried out by a single python process, thus increasing the processing time.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </dd>
+            </dl>
+
+            <div class="line"></div>
+
+            <h2 id="figuresAndSummaries">Figures and summaries</h2>
+            <p>Running VEMOD Plotter in any mode except <em>experimental</em> one, a folder is created in the <mark><code>processingPath</code></mark>. This folder is named as <mark>&lt;date&gt;_&lt;room_temperature_conditions&gt;_&lt;mode&gt;_&lt;simulation_mode&gt;</mark>, e.g., <mark>2020-Jan-08_ambient_transient_testbench</mark>. If none of the previous attributes are available in the configuration file, the folder is named according to the processing date.</p>
+
+            <p>Each mode creates different sub-folders in the mentioned folder:</p>
+
+            <dl>
+                <dt>Steady-avg</dt>
+                <dd>
+                    <div class="dir-tree">
+                        <p>/&lt;processing_folder&gt;</p>
+                        <p>&nbsp&nbsp&nbsp&nbsp|- &lt;xmlCase&gt;</p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /cycles <span class="dir-tree-explanation">(Stores the simulation average result files)</span></p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /img <span class="dir-tree-explanation">(Stores the generated bar graphs)</span></p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /mat <span class="dir-tree-explanation">(Stores the simulation Matlab files)</span></p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /structs_for_Matlab</p>
+                        <span class="dir-tree-explanation">(Stores the generated Matlab datasets, only if 'simulationMode' is 'testbench')</span>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /time_evolution </p>
+                        <span class="dir-tree-explanation">(Stores the generated variable vs time graphs, only if 'timeEvolution plot' is true)</span>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /trends</p>
+                        <span class="dir-tree-explanation">(Stores the generated model vs experiment graphs, only if 'trends plot' is true)</span>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /xml <span class="dir-tree-explanation">(Stores the model XML files)</span></p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- IVC_data.xlsx <span class="dir-tree-explanation">(Intake Valve Closing conditions for each steady-state case)</span></p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- summary_averages.xlsx <span class="dir-tree-explanation">(Statistical summary for each steady-state case)</span></p>
+                    </div>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>Steady-ins</dt>
+                <dd>
+                    <div class="dir-tree">
+                        <p>/&lt;processing_folder&gt;</p>
+                        <p>&nbsp&nbsp&nbsp&nbsp|- &lt;xmlCase&gt;</p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /img_ins <span class="dir-tree-explanation">(Stores the generated line graphs)</span></p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /mat <span class="dir-tree-explanation">(Stores the simulation Matlab files)</span></p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /plots</p>
+                        <span class="dir-tree-explanation">(Stores the simulation instantaneous result files of each -or last- engine cycle)</span>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /xml <span class="dir-tree-explanation">(Stores the model XML files)</span></p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- summary_cyl_ins.xlsx <span class="dir-tree-explanation">(Statistical summary for each steady-state case)</span></p>
+                    </div>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>Transient</dt>
+                <dd>
+                    <div class="dir-tree">
+                        <p>/&lt;processing_folder&gt;</p>
+                        <p>&nbsp&nbsp&nbsp&nbsp|- &lt;xmlCase&gt;</p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /cycles <span class="dir-tree-explanation">(Stores the simulation average result files along the transient cycle)</span></p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /img <span class="dir-tree-explanation">(Stores the generated line graphs)</span></p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /mat <span class="dir-tree-explanation">(Stores the simulation Matlab files)</span></p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /plots</p>
+                        <span class="dir-tree-explanation">(Stores the simulation instantaneous result files of each -or last- engine cycle)</span>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /trends</p>
+                        <span class="dir-tree-explanation">(Stores the generated model vs experiment graphs, only if 'trends plot' is true)</span>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- /xml <span class="dir-tree-explanation">(Stores the model XML files)</span></p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- summary_transient.xlsx <span class="dir-tree-explanation">(Statistical summary)</span></p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- transient_for_N-mf_mode_&lt;roomTemperature&gt;.xlsx</p>
+                        <span class="dir-tree-explanation">(Launcher transient input file for N-mf mode, only if 'simulationMode' is 'testbench')</span>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|- transient_for_N-T_mode_&lt;roomTemperature&gt;.xlsx</p>
+                        <span class="dir-tree-explanation">(Launcher transient input file for N-T mode, only if 'simulationMode' is 'testbench')</span>
+                    </div>
+                </dd>
+            </dl>
+
+            <div class="line"></div>
+
+            <h2 id="structure">Structure</h2>
+            <p>This section covers how variable data is managed within the program. The data structure strongly depends on the processing mode. The following charts explain the structure for each mode:</p>
+
+            <dl>
+                <dt>Steady-avg</dt>
+                <dd>
+                    <div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;lightbox&quot;:false,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;toolbar&quot;:&quot;zoom&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;www.draw.io\&quot; modified=\&quot;2020-01-09T14:29:23.256Z\&quot; agent=\&quot;Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0\&quot; etag=\&quot;9UPJ38UhD410yt5f13eG\&quot; version=\&quot;12.4.9\&quot; type=\&quot;device\&quot;&gt;&lt;diagram id=\&quot;6a731a19-8d31-9384-78a2-239565b7b9f0\&quot; name=\&quot;Page-1\&quot;&gt;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&lt;/diagram&gt;&lt;/mxfile&gt;&quot;}"></div>
+                    <p>For example, to access model values it would be like this:</p>
+                    <pre class="language-python"><code class="language-python">
+                        variable.values['&lt;steady-state_test_name&gt;']['model']
+                    </code></pre>
+                </dd>
+            </dl>
+            <dl>
+                <dt>Steady-ins</dt>
+                <dd>
+                    <div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;lightbox&quot;:false,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;toolbar&quot;:&quot;zoom&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;www.draw.io\&quot; modified=\&quot;2020-01-09T14:47:24.408Z\&quot; agent=\&quot;Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0\&quot; etag=\&quot;hkjO3HAXT5ZMV6ltvidL\&quot; version=\&quot;12.4.9\&quot; type=\&quot;device\&quot;&gt;&lt;diagram id=\&quot;6a731a19-8d31-9384-78a2-239565b7b9f0\&quot; name=\&quot;Page-1\&quot;&gt;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&lt;/diagram&gt;&lt;/mxfile&gt;&quot;}"></div>
+                    <p>For example, to access model Y values it would be like this:</p>
+                    <pre class="language-python"><code class="language-python">
+                        variable.values['&lt;steady-state_test_name&gt;']['model']['y']
+                    </code></pre>
+                </dd>
+            </dl>
+            <dl>
+                <dt>Transient</dt>
+                <dd>
+                    <div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;lightbox&quot;:false,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;toolbar&quot;:&quot;zoom&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;www.draw.io\&quot; modified=\&quot;2020-01-09T14:53:55.984Z\&quot; agent=\&quot;Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0\&quot; etag=\&quot;ItPTEP432bQ3pL-n-8XJ\&quot; version=\&quot;12.4.9\&quot; type=\&quot;device\&quot;&gt;&lt;diagram id=\&quot;6a731a19-8d31-9384-78a2-239565b7b9f0\&quot; name=\&quot;Page-1\&quot;&gt;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&lt;/diagram&gt;&lt;/mxfile&gt;&quot;}"></div>
+                    <p>For example, to access model Y values it would be like this:</p>
+                    <pre class="language-python"><code class="language-python">
+                        variable.values['model']['y']
+                    </code></pre>
+                </dd>
+            </dl>
+
+            <div class="line"></div>
+
+            <h2 id="maintenance">Maintenance</h2>
+            <p>Several actions can be taken to increase the program versatility easily. A few of them are explained below:</p>
+            <dl>
+                <dt>Increase available properties for test names</dt>
+                <dd>
+                    <p>More property types can be added to identify the parts of a test name. To do this, add them to the restrictions in the <mark>config.xsd</mark> scheme file.</p>
+                    <p>You can also manage how they are going to be displayed in the graphs by modifying the <mark><code>get_case_labels</code></mark> function in the <mark>/resources/plotting_functions.py</mark> file.
+                </dd>
+            </dl>
+            <dl>
+                <dt>Add or replace the room temperature identifiers</dt>
+                <dd>
+                    <p>Currently there are three options: warm, cold or ambient. You can add new ones by adding them to the restrictions in the <mark>config.xsd</mark> scheme file.</p>
+                    <p>Warm and cold conditions are identified in test names by an <strong>h</strong> and a <strong>c</strong>, respectively. You can edit this by modifying the <mark><code>room_cond_dict</code></mark> dictionary at the beginning of the <mark>plotter.py</mark> file.
+                </dd>
+            </dl>
+            <dl>
+                <dt>Add or replace the transient experimental files</dt>
+                <dd>
+                    <p>You can add new transient experimental files or replace the existing ones. To make sure that the program is reading the proper files, edit the <mark><code>experimental_transient</code></mark> dictionary at the beginning of the <mark>plotter.py</mark> file.</p>
+                </dd>
+                <div class="container recommendation">
+                    <h5>Note</h5>
+                    <p>Every time a transient experimental file is modified in the <mark>../INPUT_dataset/medidas_WLTC</mark> folder, next time the program is executed, it is aware of the modification and creates a new binary version of the Excel file for a faster loading in the future.</p>
+                </div>
+            </dl>
+            <dl>
+                <dt>Add or replace graph colors and markers</dt>
+                <dd>
+                    <p>You can add or replace the current sequence of markers and colours by modifying the <mark><code>markers</code></mark>  and <mark><code>colors</code></mark> tuples at the beginning of the <mark>/resources/plotting_functions.py</mark> file. Visit <a target="_blank" href="https://matplotlib.org/3.0.3/api/markers_api.html?highlight=markers#module-matplotlib.markers">Matplotlib markers</a> and <a target="_blank" href="https://matplotlib.org/3.0.3/tutorials/colors/colors.html">Matplotlib colors</a> for more information.</p>
+                </dd>
+            </dl>
+
+            <div class="line"></div>
+
+            <h2 id="changelog">Changelog</h2>
+            <h5><strong>2.0.0</strong></h5>
+            <ul>
+                <li>New project structure: one main script for processing all the simulations.
+                    Auxiliary functions and classes separated from main script.</li>
+                <li>Simulation data loading and graphs creation processes are done in parallel multiprocessing.</li>
+                <li>Resulting graphs now can be stored at any folder. Not necessarily in the local repository.</li>
+                <li>Different verbosity levels: info and debug.</li>
+                <li>Improved summary files with more information and better structured.</li>
+                <li>Full documentation available for functions and files.</li>
+                <li>Configuration file moved to XML format with more parameters and greater independence of the engine type. It also includes an XML checker that look for problems in the configuration file.</li>
+                <li>Better file sorting method.</li>
+                <li>Better identification of steady-state test names.</li>
+                <li>Transient tests can be evaluated by sections.</li>
+                <li>Homogenization of variable input files.</li>
+            </ul>
+
+            <div class="line"></div>
+
+            <h2 id="contact">Contact</h2>
+            <p>Contact <a href="mailto:ngeaugar@mot.upv.es">ngeaugar@mot.upv.es</a> for any questions not resolved in this guide.</p>
+            <br>
+            <br>
+        </div>
+
+    </div>
+
+    <!-- Go to top button -->
+    <nav class="float-button" aria-label="...">
+        <a href="#">Go to top</a>
+    </nav>
+
+    <!-- JS imports -->
+    <script src="./resources/guide/js/jquery-3.3.1.slim.min.js"></script>
+    <script src="./resources/guide/js/bootstrap.min.js"></script>
+    <script src="./resources/guide/js/prism.js"></script>
+    <script src="./resources/guide/js/solid.js"></script>
+    <script src="./resources/guide/js/fontawesome.js"></script>
+    <script src="./resources/guide/js/viewer.min.js"></script>
+</body>
