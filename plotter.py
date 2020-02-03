@@ -7,10 +7,10 @@ experimental measurements.
 
 __author__ = "Angel Auñón"
 __copyright__ = 'Copyright 2020, VEMOD plotter'
-__credits__ = ["Angel Auñón", "Paco Arnau"]
+__credits__ = ["Angel Auñón"]
 __license__ = 'GPL'
-__version__ = '2.0.1'
-__date__ = '2020-01-13'
+__version__ = '2.1.0'
+__date__ = '2020-02-03'
 __maintainer__ = "Angel Auñón"
 __email__ = 'ngeaugar@mot.upv.es'
 __status__ = 'Development'
@@ -446,7 +446,7 @@ def main(mode=None):
         for fname in files:
             if (model_prefix in fname) and (room_conditions in fname)\
                     and (sim_mode in fname):
-                if 'cycles' in fname:
+                if 'cycles' in fname and args.mode == 'steady-avg':
                     try:
                         copyfile(os.path.join(root, fname),
                                  os.path.join(processing_path,
@@ -642,10 +642,12 @@ def main(mode=None):
                 evolution_table_file))
             try:
                 evolution_table = pd.read_table(evolution_table_file)
-                for i in range(evolution_table.shape[0] - 1):
+                for i in range(evolution_table.shape[0]):
                     if evolution_table.at[i, 'Print'].lower() == 'yes':
-                        if evolution_table.at[i, 'Name'] != evolution_table.at[
-                                i + 1, 'Name']:
+                        if evolution_table.at[i, 'Name'] in\
+                                [v.name for v in var_list]:
+                            continue
+                        else:
                             var_list.append(Variable(
                                 {'name': evolution_table.at[i, 'Name'],
                                  'model_col':
@@ -684,10 +686,12 @@ def main(mode=None):
                 for cil in range(1, xml_dict['engine']['@cylinders'] + 1):
                     file1 = "{}_cil{}.dat".format(test, cil)
                     calmec1 = pd.read_csv(os.path.join(calmec_path, file1),
-                                          encoding='latin1', sep=' ')
+                                          encoding='latin1', engine='python',
+                                          sep=None)
                     file2 = "{}_cil{}_ciclo.dat".format(test, cil)
                     calmec2 = pd.read_csv(os.path.join(calmec_path, file2),
-                                          encoding='latin1', sep=' ')
+                                          encoding='latin1', engine='python',
+                                          sep=None)
                     calmec2['Cv(J/kgK)'] = calmec2['CVa(J/kgK)'] *\
                         calmec2['Ya(-)'] + calmec2['CVf(J/kgK)'] *\
                         calmec2['Yf(-)'] + calmec2['CVq(J/kgK)'] *\
@@ -823,16 +827,20 @@ def main(mode=None):
                 model_var_table_file))
             try:
                 table = pd.read_table(model_var_table_file)
-                for i in range(table.shape[0] - 1):
+                for i in range(table.shape[0]):
                     if table.at[i, 'Print'].lower() == 'yes':
-                        if table.at[i, 'Name'] != table.at[i + 1, 'Name']:
+                        if table.at[i, 'Name'] in [v.name for v in var_list]:
+                            continue
+                        else:
                             var_list.append(Variable(
                                 {'name': table.at[i, 'Name'],
                                  'model_col':
                                     table.loc[table['Name'] == table.at[
                                         i, 'Name'], 'Mod_column'].values,
                                  'units': table.at[i, 'Units'],
-                                 'conv_factor': table.at[i, 'Conv_factor'],
+                                 'conv_factor':
+                                    table.loc[table['Name'] == table.at[
+                                        i, 'Name'], 'Conv_factor'].values,
                                  'plot_trends': False,
                                  'plot_time_evolution': True,
                                  'is_pollutant': False,
@@ -1523,9 +1531,10 @@ def main(mode=None):
                                 'model': {
                                     'x': mod_case['Time[s]'].values,
                                     'y': [cumtrapz(
-                                        mod_case[val] *
-                                        var.conv_factor, mod_case['Time[s]'],
-                                        initial=0) for val in var.model_col]}
+                                        mod_case[val] * factor,
+                                        mod_case['Time[s]'],
+                                        initial=0) for val, factor in zip(
+                                            var.model_col, var.conv_factor)]}
                             })
                         elif ('acc' in var.name.lower()) and\
                                 ('fuel' in var.name.lower()):
@@ -1533,19 +1542,19 @@ def main(mode=None):
                                 'model': {
                                     'x': mod_case['Time[s]'].values,
                                     'y': [cumtrapz(
-                                        mod_case[val] *
-                                        var.conv_factor * mod_case[
+                                        mod_case[val] * factor * mod_case[
                                             'Engine/EngineSpeed[rpm]'] / 60 *
-                                        4 / 2, mod_case['Time[s]'], initial=0)
-                                        for val in var.model_col]}
+                                        4 / 2, mod_case['Time[s]'],
+                                        initial=0) for val, factor in zip(
+                                            var.model_col, var.conv_factor)]}
                             })
                         else:
                             var.set_values({
                                 'model': {
                                     'x': mod_case['Time[s]'].values,
                                     'y': [mod_case[val].values *
-                                          var.conv_factor for val in
-                                          var.model_col]}
+                                          factor for val, factor in zip(
+                                          var.model_col, var.conv_factor)]}
                             })
                     else:
                         if 'hydrcircuit' in var.model_col.lower():
@@ -1615,6 +1624,20 @@ def main(mode=None):
         transient_dict['max_time'] = xml_dict['simulationProcessing'][
             'transient']['@simTime'] if '@simTime' in xml_dict[
                 'simulationProcessing']['transient'].keys() else None
+        transient_dict['start'] = xml_dict['simulationProcessing'][
+            'transient']['@sectionStart'] if '@sectionStart' in xml_dict[
+                'simulationProcessing']['transient'].keys() else 0
+        transient_dict['end'] = xml_dict['simulationProcessing'][
+            'transient']['@sectionEnd'] if '@sectionEnd' in xml_dict[
+                'simulationProcessing']['transient'].keys()\
+            else transient_dict['max_time']
+        transient_dict['filter'] = xml_dict['simulationProcessing'][
+            'transient']['@filterModel'] if '@filterModel' in xml_dict[
+                'simulationProcessing']['transient'].keys() else True
+        if transient_dict['filter'] is False:
+            log.warning("Model signals are not filtered. You should expect "
+                        "some noise in the graphs and a poor correlation "
+                        "coefficient in trend graphs")
         transient_dict['divisions'] = divisions
         transient_dict['errors'] = errors
     else:

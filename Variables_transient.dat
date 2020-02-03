@@ -14,7 +14,7 @@ No	Vxx_tia_1	Vxx_tia_1	Plenum/WCACInlet-1/Temperature[degC]	degC	1	NA	NA	0
 Yes	WCAC Outlet Temperature	T_adm_media	Plenum/WCACOutlet-1/Temperature[degC]	degC	1	NA	NA	10
 Yes	WCAC Heat	T_S_Comp,T_adm_media	Pipe/CompressorOutlet/0.010m,Plenum/WCACInlet-1,Plenum/WCACOutlet-1	kW	1	NA	NA	0
 Yes	WCAC Accum. Energy	T_S_Comp,T_adm_media	Pipe/CompressorOutlet/0.010m,Plenum/WCACInlet-1,Plenum/WCACOutlet-1	kJ	1	NA	NA	0
-No	HP-EGR Inlet Temperature	T_E_EGR	Pipe/HPEGROutlet/0.050m/Temperature[degC]/Static	degC	1	NA	NA	0
+No	HP-EGR Outlet Temperature	T_E_EGR	Pipe/HPEGROutlet/0.990m/Temperature[degC]/Static	degC	1	NA	NA	0
 Yes	Turbine In. Temp.	T_E_Turb	Pipe/TurbineInlet/0.990m/Temperature[degC]/Static	degC	1	NA	NA	10
 Yes	Turbine Out. Temp.	T_S_Turb	Pipe/TurbineOutlet/0.010m/Temperature[degC]/Static	degC	1	NA	NA	10
 Yes	Oil Temperature	T_Oil1	HydrCircuit/OilCircuit-1/ObjectTemp[degC]/pipe/OilCoolerOutlet	degC	1	NA	NA	0
@@ -32,7 +32,7 @@ Yes	LP-EGR Outlet Pressure	P_S_EGRLP	Pipe/LPEGRCoolerOutlet/0.990m/Pressure[bar]
 Yes	Compressor Inlet Pressure	P_E_Comp	Pipe/CompressorInlet/0.990m/Pressure[bar]/Static	bar	1	NA	NA	0
 Yes	Turbine In. Pressure	P_E_Turb	Pipe/TurbineInlet/0.990m/Pressure[bar]/Static	bar	1	NA	NA	0
 Yes	Turbine Out. Pressure	P_S_Turb	Pipe/TurbineOutlet/0.010m/Pressure[bar]/Static	bar	1	NA	NA	0
-Yes	HP-EGR Outlet Pressure	P_S_EGR	Pipe/HPEGROutlet/0.050m/Pressure[bar]/Static	bar	1	NA	NA	0
+Yes	HP-EGR Outlet Pressure	P_S_EGR	Pipe/HPEGROutlet/0.990m/Pressure[bar]/Static	bar	1	NA	NA	0
 Yes	Coolant Flow	Q_Mot	HydrCircuit/CoolantCircuit-1/CoolantCooler/Flow[L/min]	l/min	1	NA	NA	0
 Yes	Q_WCAC	Q_WCAC	HydrCircuit/CoolantCircuit-1/CoolantCooler/Flow[L/min]	l/min	1	NA	NA	0
 Yes	Turbocharger Speed	rpm_turbo	Turbocharger/Turbocharger-1/Speed[rpm]	rev/min	1	NA	NA	0

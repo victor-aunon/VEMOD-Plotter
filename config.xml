@@ -22,9 +22,10 @@
         </outputFile>
     </experimentalProcessing>
     <simulationProcessing>
-        <settings roomTempConditions="ambient" modelNamePrefix="R9M_lab12_" xmlCase="Default" simulationMode="testbench"
+        <settings roomTempConditions="ambient" modelNamePrefix="R9M_lab12_" xmlCase="Default" simulationMode="N-T"
             simulationPath="../User_VEMOD_Model/simulation/results" processingPath="" />
-        <transient experimentalPath="../INPUT_dataset/medidas_WLTC" variablesFile="Variables_transient.dat" simTime="1800">
+        <transient experimentalPath="../INPUT_dataset/medidas_WLTC" variablesFile="Variables_transient.dat" simTime="1800"
+                sectionStart="0" sectionEnd="1800" filterModel="true">
             <divisions>
                 <division name="Low" start="0.0" end="589" />
                 <division name="Medium" start="589" end="1022" />

@@ -265,8 +265,11 @@ def create_summary(args, var_list, path, mod_label=None, exp_label=None,
                 transient_variable_summary)(var, mod_label, exp_label,
                                             profile) for var in var_list)
             for summary_var in summary_list:
-                for var, values in summary_var.items():
-                    summary_dict[var] = values
+                try:
+                    for var, values in summary_var.items():
+                        summary_dict[var] = values
+                except Exception:
+                    continue
         else:
             last_percent = 10
             for i, var in enumerate(var_list):
@@ -275,9 +278,11 @@ def create_summary(args, var_list, path, mod_label=None, exp_label=None,
                 if np.floor(i * 100 / len(var_list)) >= last_percent:
                     log.info("{} %".format(last_percent))
                     last_percent += 10
-
-                for var, values in summary_var.items():
-                    summary_dict[var] = values
+                try:
+                    for var, values in summary_var.items():
+                        summary_dict[var] = values
+                except Exception:
+                    continue
             log.info('100 %')
 
         summary = pd.DataFrame.from_dict(summary_dict, orient='index',
@@ -409,5 +414,6 @@ def transient_variable_summary(var, mod_label=None, exp_label=None,
                 ] = sorted(map(abs, [smape([m], [e]) for m, e in zip(
                     ydm, yde)]))[index]
         return summary_var
-    except Exception:
+    except Exception as e:
+        log.error("{}: {}".format(var.name, e))
         pass

@@ -624,6 +624,24 @@
                             <td>unsignedInt</td>
                             <td>optional</td>
                         </tr>
+                        <tr>
+                            <td>sectionStart</td>
+                            <td style="padding-right: 20px;">The starting time (in seconds) of the transient cycle section to be plotted.</td>
+                            <td>float</td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>sectionEnd</td>
+                            <td style="padding-right: 20px;">The ending time (in seconds) of the transient cycle section to be plotted.</td>
+                            <td>float</td>
+                            <td>optional</td>
+                        </tr>
+                        <tr>
+                            <td>filterModel</td>
+                            <td style="padding-right: 20px;">Decides whether to filter or not the model values. Default is <strong>true</strong>.</td>
+                            <td>boolean</td>
+                            <td>optional</td>
+                        </tr>
                     </tbody>
                 </table>
                 <p id="noteVariablesFile">5. The table file with the listed variables must have the following columns:</p>
@@ -1178,6 +1196,14 @@
             <div class="line"></div>
 
             <h2 id="changelog">Changelog</h2>
+            <h5><strong>2.1.0</strong></h5>
+            <ul>
+                <li>Added the feature of graphing a section of the entire transient cycle.</li>
+                <li>Added the option for not filtering model signals.</li>
+                <li>Autodetection of the separation character in calmec files.</li>
+                <li>Improved the way in which model variables are read.</li>
+                <li>Added new model variables.</li>
+            </ul>
             <h5><strong>2.0.1</strong></h5>
             <ul>
                 <li>Changes in error columns in transient summary.</li>

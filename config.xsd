@@ -169,6 +169,9 @@
 									<xs:attribute name="experimentalPath" type="xs:string" use="required" />
 									<xs:attribute name="variablesFile" type="xs:string" use="required" />
 									<xs:attribute name="simTime" type="xs:unsignedInt" use="optional" />
+									<xs:attribute name="sectionStart" type="xs:float" use="optional" />
+									<xs:attribute name="sectionEnd" type="xs:float" use="optional" />
+									<xs:attribute name="filterModel" type="xs:boolean" use="optional" />
 								</xs:complexType>
 							</xs:element>
 							<xs:element name="steady">

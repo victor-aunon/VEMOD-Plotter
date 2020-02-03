@@ -34,13 +34,9 @@ yes	LPEGR Cooler Pressure	Pipe/LPEGRCoolerInlet/0.990m/Pressure[bar]/Static	Inle
 yes	LPEGR Cooler Pressure	Pipe/LPEGRCoolerOutlet/0.990m/Pressure[bar]/Static	Outlet	bar	1
 yes	LPEGR Cooler Temperature	Pipe/LPEGRCoolerInlet/0.990m/Temperature[degC]/Static	Inlet	degC	1
 yes	LPEGR Cooler Temperature	Pipe/LPEGRCoolerOutlet/0.990m/Temperature[degC]/Static	Outlet	degC	1
-yes	WCAC Pressure	Plenum/WCACInlet-1/Pressure[bar]	Inlet	bar	1
-yes	WCAC Pressure	Plenum/WCACOutlet-1/Pressure[bar]	Outlet	bar	1
-yes	WCAC Temperature	Plenum/WCACInlet-1/Temperature[degC]	Inlet	degC	1
-yes	WCAC Temperature	Plenum/WCACOutlet-1/Temperature[degC]	Outlet	degC	1
-yes	Exh. Manifold Temp.	Pipe/Cyl1Outlet_1/0.010m/InternalWallTemperature[degC]	Cylinder Outlet	degC	1
-yes	Exh. Manifold Temp.	Plenum/ExhaustManifold-1/WallTemperature[degC]	Exhaust Manifold	degC	1
-yes	Exh. Manifold Temp.	Pipe/TurbineInlet/0.990m/InternalWallTemperature[degC]	Turbine Inlet	degC	1
+yes	Exh. Man. Wall Temp.	Pipe/Cyl1Outlet_1/0.010m/InternalWallTemperature[degC]	Cylinder Outlet Wall	degC	1
+yes	Exh. Man. Wall Temp.	Plenum/ExhaustManifold-1/WallTemperature[degC]	Exhaust Manifold Wall	degC	1
+yes	Exh. Man. Wall Temp.	Pipe/TurbineInlet/0.990m/InternalWallTemperature[degC]	Turbine Inlet Wall	degC	1
 yes	Injected-Burned Fuel	Cylinder/Cylinder-1/Combustion/InjectedFuel[mg]	Injected	mg	1
 yes	Injected-Burned Fuel	Cylinder/Cylinder-1/Combustion/BurnedFuel[mg]	Burned	mg	1
 yes	Accum. Inj.-Burned Fuel	Cylinder/Cylinder-1/Combustion/InjectedFuel[mg]	Injected	g	1e-3
@@ -49,8 +45,6 @@ yes	Injected-Burned Heat	Engine/HeatInjected[kW]	Injected	kW	1
 yes	Injected-Burned Heat	Engine/HeatBurned[kW]	Burned	kW	1
 yes	Accum. Inj.-Burned Heat	Engine/HeatInjected[kW]	Injected	kJ	1
 yes	Accum. Inj.-Burned Heat	Engine/HeatBurned[kW]	Burned	kJ	1
-yes	Turbine rack	ECU/Actuator-1[-]		0-100	1
-yes	HPEGR valve lift	ECU/Actuator-2[-]		0-1	1
 yes	Engine speed	ECU/Actuator-3[-]		rpm	9.549
 yes	Injection pressure	ECU/Actuator-4[-]		bar	1E-5
 yes	SOE 1	ECU/Actuator-5[-]		cad	57.296
@@ -59,7 +53,24 @@ yes	SOE 2	ECU/Actuator-7[-]		cad	57.296
 yes	mf 2	ECU/Actuator-8[-]		mg	1e6
 yes	SOE 3	ECU/Actuator-9[-]		cad	57.296
 yes	mf3	ECU/Actuator-10[-]		mg	1e6
-yes	Exhaust valve lift	ECU/Actuator-11[-]		0-1	1
-yes	LPEGR valve lift	ECU/Actuator-12[-]		0-1	1
 yes	WCAC target temp.	ECU/Actuator-13[-]		K	1
-
+yes	Intake Pressures	Plenum/WCACInlet-1/Pressure[bar]	WCAC Inlet	bar	1
+yes	Intake Pressures	Plenum/WCACOutlet-1/Pressure[bar]	WCAC Outlet	bar	1
+yes	Intake Pressures	Pipe/HPEGROutlet/0.990m/Pressure[bar]/Static	HPEGR Outlet	bar	1
+yes	Intake Temperatures	Plenum/WCACInlet-1/Temperature[degC]	WCAC Inlet	degC	1
+yes	Intake Temperatures	Plenum/WCACOutlet-1/Temperature[degC]	WCAC Outlet	degC	1
+yes	Intake Temperatures	Pipe/HPEGROutlet/0.990m/Temperature[degC]/Static	HPEGR Outlet	degC	1
+yes	Exhaust Pressures	Plenum/ExhaustManifold-1/Pressure[bar]	Exhaust Manifold	bar	1
+yes	Exhaust Pressures	Pipe/TurbineInlet/0.010m/Pressure[bar]/Static	Turbine Inlet	bar	1
+yes	Exhaust Pressures	Pipe/HPEGRInlet/0.010m/Pressure[bar]/Static	HPEGR Inlet	bar	1
+yes	Exhaust Temperatures	Plenum/ExhaustManifold-1/Temperature[degC]	Exhaust Manifold	degC	1
+yes	Exhaust Temperatures	Pipe/TurbineInlet/0.010m/Temperature[degC]/Static	Turbine Inlet	degC	1
+yes	Exhaust Temperatures	Pipe/HPEGRInlet/0.010m/Temperature[degC]/Static	HPEGR Inlet	degC	1
+yes	Mass Flows	Pipe/CompressorOutlet/1.710m/MassFlow[kg/s]	Compressor Outlet	kg/h	3600
+yes	Mass Flows	Pipe/TurbineInlet/0.990m/MassFlow[kg/s]	Turbine Inlet	kg/h	3600
+yes	Mass Flows	Pipe/LPEGRCoolerInlet/0.990m/MassFlow[kg/s]	LPEGR	kg/h	3600
+yes	Mass Flows	Pipe/HPEGROutlet/0.990m/MassFlow[kg/s]	HPEGR	kg/h	3600
+yes	Valves Opening	ECU/Actuator-12[-]	LPEGR	0-100	100
+yes	Valves Opening	ECU/Actuator-1[-]	Turbine rack	0-100	1
+yes	Valves Opening	ECU/Actuator-2[-]	HPEGR	0-100	100
+yes	Valves Opening	ECU/Actuator-11[-]	Exhaust Throttle	0-100	100

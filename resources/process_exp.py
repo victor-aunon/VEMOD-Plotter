@@ -32,7 +32,7 @@ def process_experimental_steady(calmec_avg_file, experimental_raw_file,
         path of the output processed table file.
     """
 
-    calmec_data = pd.read_table(calmec_avg_file, encoding='Windows-1252')
+    calmec_data = pd.read_table(calmec_avg_file, engine='python', sep=None)
     data = pd.read_excel(experimental_raw_file)
 
     # Filter by the selected cases

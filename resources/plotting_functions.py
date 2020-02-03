@@ -924,8 +924,8 @@ def plot_transient_var(data, styles, path, name, units, profile, r=1):
             ax1.legend(legend, bbox_to_anchor=(0.5, 1.1), loc='upper center',
                        ncol=len(legend), fancybox=True, shadow=True,
                        fontsize=14).set_zorder(100)
-        ax1.set_xlim([0, profile['max_time']])
-        ax2.set_xlim([0, profile['max_time']])
+        ax1.set_xlim([profile['start'], profile['end']])
+        ax2.set_xlim([profile['start'], profile['end']])
 
     else:
         # Create a simple figure
@@ -936,19 +936,22 @@ def plot_transient_var(data, styles, path, name, units, profile, r=1):
         ax.set_axisbelow(True)
 
         # Smooth signals
-        try:
-            if data.extra['tau'] != 0:
-                y_mod = np.convolve(data.values['model']['y'], np.ones((
-                    data.extra['tau'] * 20,)) / data.extra['tau'] / 20,
-                    mode='same')
-                y_mod = np.concatenate((np.ones(data.extra['tau'] * 10) *
-                                       data.values['model']['y'][0],
-                                        y_mod[:(-data.extra['tau'] * 10)]))
-            else:
+        if profile['filter'] is False:
+            y_mod = data.values['model']['y']
+        else:
+            try:
+                if data.extra['tau'] != 0:
+                    y_mod = np.convolve(data.values['model']['y'], np.ones((
+                        data.extra['tau'] * 20,)) / data.extra['tau'] / 20,
+                        mode='same')
+                    y_mod = np.concatenate((np.ones(data.extra['tau'] * 10) *
+                                            data.values['model']['y'][0],
+                                            y_mod[:(-data.extra['tau'] * 10)]))
+                else:
+                    y_mod = gaussian_filter(data.values['model']['y'], sigma=2)
+            except Exception:
+                # When data.extra is None
                 y_mod = gaussian_filter(data.values['model']['y'], sigma=2)
-        except Exception:
-            # When data.extra is None
-            y_mod = gaussian_filter(data.values['model']['y'], sigma=2)
 
         if data.time_evolution is False:
             y_exp = gaussian_filter(data.values['exp']['y'], sigma=2)
@@ -973,7 +976,7 @@ def plot_transient_var(data, styles, path, name, units, profile, r=1):
         for div in profile['divisions']:
             ax.axvline(div['@start'], c='g', alpha=0.5, lw=1.5, zorder=1)
             ax.axvline(div['@end'], c='g', alpha=0.5, lw=1.5, zorder=1)
-            x_pos = np.mean([div['@start'], div['@end']]) / profile['max_time']
+            x_pos = np.mean([div['@start'], div['@end']]) / profile['end']
             ax.text(x_pos, -0.11, div['@name'],
                     {'color': 'g', 'fontsize': 11, 'ha': 'center',
                      'va': 'center', 'transform': ax.transAxes})
@@ -994,7 +997,7 @@ def plot_transient_var(data, styles, path, name, units, profile, r=1):
                 ax.legend(legend, bbox_to_anchor=(0.5, 1.1),
                           loc='upper center', ncol=len(legend), fancybox=True,
                           shadow=True, fontsize=14).set_zorder(100)
-        ax.set_xlim([0, profile['max_time']])
+        ax.set_xlim([profile['start'], profile['end']])
 
     # Save figures
     subfolder = ''
