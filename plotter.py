@@ -9,8 +9,8 @@ __author__ = "Angel Auñón"
 __copyright__ = 'Copyright 2020, VEMOD plotter'
 __credits__ = ["Angel Auñón"]
 __license__ = 'GPL'
-__version__ = '2.1.0'
-__date__ = '2020-02-03'
+__version__ = '2.2.0'
+__date__ = '2020-02-04'
 __maintainer__ = "Angel Auñón"
 __email__ = 'ngeaugar@mot.upv.es'
 __status__ = 'Development'
@@ -683,6 +683,8 @@ def main(mode=None):
             for test in exp_data['TEST']:
                 calmec_data[test] = {}
                 calmec_data[test]['ins'] = []
+                calmec_data[test]['cyl. pressure cycle'] = []
+                calmec_data[test]['angle cycle'] = []
                 for cil in range(1, xml_dict['engine']['@cylinders'] + 1):
                     file1 = "{}_cil{}.dat".format(test, cil)
                     calmec1 = pd.read_csv(os.path.join(calmec_path, file1),
@@ -692,6 +694,17 @@ def main(mode=None):
                     calmec2 = pd.read_csv(os.path.join(calmec_path, file2),
                                           encoding='latin1', engine='python',
                                           sep=None)
+                    try:
+                        file3 = "p_{} Cil {} (PCIL) .dat".format(test, cil)
+                        calmec3 = pd.read_csv(os.path.join(calmec_path, file3),
+                                              encoding='latin1',
+                                              engine='python', sep=None)
+                        calmec_data[test]['angle cycle'].append(
+                            calmec3.iloc[:, 0])
+                        calmec_data[test]['cyl. pressure cycle'].append(
+                            calmec3.iloc[:, 1])
+                    except Exception:
+                        pass
                     calmec2['Cv(J/kgK)'] = calmec2['CVa(J/kgK)'] *\
                         calmec2['Ya(-)'] + calmec2['CVf(J/kgK)'] *\
                         calmec2['Yf(-)'] + calmec2['CVq(J/kgK)'] *\
@@ -701,8 +714,8 @@ def main(mode=None):
                         calmec2['Cv(J/kgK)']
                     common_keys = list(set(calmec1.columns) & set(
                         calmec2.columns))
-                    calmec_data[test]['ins'].append(pd.merge(calmec1, calmec2,
-                                                             on=common_keys))
+                    calmec_data[test]['ins'].append(
+                        pd.merge(calmec1, calmec2, on=common_keys))
                 for col in exp_data.columns:
                     calmec_data[test]['avg'] = exp_data.loc[exp_data[
                         'TEST'] == test]
@@ -1187,6 +1200,36 @@ def main(mode=None):
                                     'Cylinder/Cylinder-2/MassFraction[-]/O2'],
                                  }
                              }}})
+                    elif var.name == 'Cyl. Pressure':
+                        y_exp = []
+                        # Centering cylinder pressure
+                        for i in range(xml_dict['engine']['@cylinders']):
+                            cyl_press = exp_case['cyl. pressure cycle'][i]
+                            cyl_angle = exp_case['angle cycle'][i]
+                            if cyl_angle[0] <= -360:
+                                start_index = np.where(
+                                    cyl_angle >= -360)[0][0]
+                                tail = np.take(cyl_press, np.where(
+                                    cyl_angle <= -360)[0])
+                                y_exp.append(np.concatenate(
+                                    (cyl_press[start_index:], tail)))
+                            else:
+                                end_index = np.where(
+                                    cyl_angle >= 360)[0][0]
+                                head = np.take(cyl_press, np.where(
+                                    cyl_angle >= 360)[0])
+                                y_exp.append(np.concatenate(
+                                    (head, cyl_press[0:end_index])))
+                        var.set_values({key: {
+                            'model':
+                            {'x': np.linspace(
+                                -360, 360, len(mod_case[var.model_col])),
+                             'y': mod_case[var.model_col].values},
+                            'exp':
+                            {'x': [np.linspace(
+                                -360, 360, len(y_cil)) for y_cil in y_exp],
+                             'y': [y_cil for y_cil in y_exp]}
+                        }})
                     else:
                         var.set_values({key: {
                             'model':
