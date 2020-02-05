@@ -9,8 +9,8 @@ __author__ = "Angel Auñón"
 __copyright__ = 'Copyright 2020, VEMOD plotter'
 __credits__ = ["Angel Auñón"]
 __license__ = 'GPL'
-__version__ = '2.2.0'
-__date__ = '2020-02-04'
+__version__ = '2.2.1'
+__date__ = '2020-02-05'
 __maintainer__ = "Angel Auñón"
 __email__ = 'ngeaugar@mot.upv.es'
 __status__ = 'Development'
@@ -446,7 +446,7 @@ def main(mode=None):
         for fname in files:
             if (model_prefix in fname) and (room_conditions in fname)\
                     and (sim_mode in fname):
-                if 'cycles' in fname and args.mode == 'steady-avg':
+                if 'cycles' in fname and args.mode != 'steady-ins':
                     try:
                         copyfile(os.path.join(root, fname),
                                  os.path.join(processing_path,
@@ -1285,51 +1285,59 @@ def main(mode=None):
             exp_data['Fuel_mass_g_s'] + exp_data['BlowBy_g_s']
 
         # Some pollutants calculations.
-        if xml_dict['plottingOptions']['emissions']['@plot']:
-            location = xml_dict['plottingOptions']['emissions'][
-                                '@location'].strip()
-            process_experimental_emissions(
-                exp_data, mode='transient', delay=delay,
-                model_amf=mod_case[location + '/MassFlow[kg/s]'],
-                model_time=mod_case['Time[s]'])
+        try:
+            if xml_dict['plottingOptions']['emissions']['@plot']:
+                location = xml_dict['plottingOptions']['emissions'][
+                                    '@location'].strip()
+                process_experimental_emissions(
+                    exp_data, mode='transient', delay=delay,
+                    model_amf=mod_case[location + '/MassFlow[kg/s]'],
+                    model_time=mod_case['Time[s]'])
 
-            # Convert model pollutants to experimental units (%vol)
-            for name, specie, density in zip(
-                ['CO2', 'O2', 'CO'], ['CO2', 'O2', 'CO'],
-                    [1842, 1331, 1165]):
-                model_col = '{}/MassFraction[-]/{}'.format(location, specie)
-                model_col_amf = model_col.rsplit('/', 2)[0] + '/MassFlow[kg/s]'
-                mod_case[name] = mod_case[model_col] *\
-                    mod_case[model_col_amf] * 118400 /\
-                    mod_case[model_col_amf] / density
-            y = 1.7843
-            z = 0
-            B_est = 1 + y / 4 - z / 2
-            Y_O2_air = 0.23
-            A = (1 - Y_O2_air) / 28 * 32 / Y_O2_air
-            B = ((100 / mod_case['CO2']) - 1 + B_est) / (1 + A)
-            mod_case['Fs_h'] = (1 + (B - B_est) + B * A) /\
-                (1 + y / 2 + (B - B_est) + B * A)
-            # Model THC emissions (ppm)
-            mod_case['THC'] = mod_case[location + '/MassFraction[-]/FUEL'] *\
-                (44 + y / 2 * 18 + (B - B_est) * 32 + B * A * 28) /\
-                (1e-6 * (12 + y) * (1 + y / 2 + (B - B_est) + B * A))
-            # exp_data['NO2'], exp_data['NO'] and exp_data['NOx_total'] are
-            # available since process_experimental_emissions() was called
-            mNOx = 30 * (1 - exp_data['NO2'] / exp_data['NOx_total']) + 46 *\
-                (exp_data['NO2'] / exp_data['NOx_total'])
-            # Since the model only provides total NOx, Here I am taking the
-            # same NOx molecular weight as in the experiment (based on NO +
-            # NO2)
-            # Interpolate the molecular weight array to fit the model
-            # values size
-            mNOx_interp = np.interp(mod_case['Time[s]'].values,
-                                    exp_data['Time'].values, mNOx)
-            # Model NOx emissions (ppm)
-            mod_case['NOx'] = mod_case[location + '/MassFraction[-]/NOx'] *\
-                (44 + y / 2 * 18 + (B - B_est) * 32 + B * A * 28) /\
-                (1e-6 * mod_case['Fs_h'] * mNOx_interp *
-                    (1 + y / 2 + (B - B_est) + B * A))
+                # Convert model pollutants to experimental units (%vol)
+                for name, specie, density in zip(
+                    ['CO2', 'O2', 'CO'], ['CO2', 'O2', 'CO'],
+                        [1842, 1331, 1165]):
+                    model_col = '{}/MassFraction[-]/{}'.format(location,
+                                                               specie)
+                    model_col_amf = model_col.rsplit('/', 2)[0] +\
+                        '/MassFlow[kg/s]'
+                    mod_case[name] = mod_case[model_col] *\
+                        mod_case[model_col_amf] * 118400 /\
+                        mod_case[model_col_amf] / density
+                y = 1.7843
+                z = 0
+                B_est = 1 + y / 4 - z / 2
+                Y_O2_air = 0.23
+                A = (1 - Y_O2_air) / 28 * 32 / Y_O2_air
+                B = ((100 / mod_case['CO2']) - 1 + B_est) / (1 + A)
+                mod_case['Fs_h'] = (1 + (B - B_est) + B * A) /\
+                    (1 + y / 2 + (B - B_est) + B * A)
+                # Model THC emissions (ppm)
+                mod_case['THC'] = mod_case[
+                    location + '/MassFraction[-]/FUEL'] *\
+                    (44 + y / 2 * 18 + (B - B_est) * 32 + B * A * 28) /\
+                    (1e-6 * (12 + y) * (1 + y / 2 + (B - B_est) + B * A))
+                # exp_data['NO2'], exp_data['NO'] and exp_data['NOx_total'] are
+                # available since process_experimental_emissions() was called
+                mNOx = 30 * (1 - exp_data['NO2'] / exp_data['NOx_total']) +\
+                    46 * (exp_data['NO2'] / exp_data['NOx_total'])
+                # Since the model only provides total NOx, Here I am taking the
+                # same NOx molecular weight as in the experiment (based on NO +
+                # NO2)
+                # Interpolate the molecular weight array to fit the model
+                # values size
+                mNOx_interp = np.interp(mod_case['Time[s]'].values,
+                                        exp_data['Time'].values, mNOx)
+                # Model NOx emissions (ppm)
+                mod_case['NOx'] = mod_case[
+                    location + '/MassFraction[-]/NOx'] *\
+                    (44 + y / 2 * 18 + (B - B_est) * 32 + B * A * 28) /\
+                    (1e-6 * mod_case['Fs_h'] * mNOx_interp *
+                        (1 + y / 2 + (B - B_est) + B * A))
+        except Exception as e:
+            log.error("Impossible to process pollutant "
+                      "emissions: {}".format(e))
 
         for i, var in enumerate(var_list):
             try:
@@ -1559,6 +1567,23 @@ def main(mode=None):
                                        273.15) *
                                 (exp_data[exp_in] - exp_data[exp_out]) / 1000,
                                 exp_data['Time'].values, initial=0)}
+                    })
+                elif var.name == 'Exh-Int Diff. Pressure':
+                    p_exh_mod, p_int_mod = var.model_col.split(',')
+                    p_exh_exp, p_int_exp = var.exp_col.split(',')
+                    var.set_values({
+                        'model': {
+                            'x': mod_case['Time[s]'].values,
+                            'y':
+                            (mod_case[p_exh_mod.strip()].values -
+                             mod_case[p_int_mod.strip()].values) *
+                            var.conv_factor},
+                        'exp': {
+                            'x': exp_data['Time'].values,
+                            'y': 
+                            (exp_data[p_exh_exp.strip()].values -
+                             exp_data[p_int_exp.strip()].values) *
+                            var.conv_factor},
                     })
                 else:
                     if var.time_evolution is True:

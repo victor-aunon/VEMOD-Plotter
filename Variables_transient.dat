@@ -33,6 +33,7 @@ Yes	Compressor Inlet Pressure	P_E_Comp	Pipe/CompressorInlet/0.990m/Pressure[bar]
 Yes	Turbine In. Pressure	P_E_Turb	Pipe/TurbineInlet/0.990m/Pressure[bar]/Static	bar	1	NA	NA	0
 Yes	Turbine Out. Pressure	P_S_Turb	Pipe/TurbineOutlet/0.010m/Pressure[bar]/Static	bar	1	NA	NA	0
 Yes	HP-EGR Outlet Pressure	P_S_EGR	Pipe/HPEGROutlet/0.990m/Pressure[bar]/Static	bar	1	NA	NA	0
+Yes	Exh-Int Diff. Pressure	P_E_Turb,P_S_EGR	Pipe/TurbineInlet/0.990m/Pressure[bar]/Static,Plenum/WCACOutlet-1/Pressure[bar]	bar	1	NA	NA	0
 Yes	Coolant Flow	Q_Mot	HydrCircuit/CoolantCircuit-1/CoolantCooler/Flow[L/min]	l/min	1	NA	NA	0
 Yes	Q_WCAC	Q_WCAC	HydrCircuit/CoolantCircuit-1/CoolantCooler/Flow[L/min]	l/min	1	NA	NA	0
 Yes	Turbocharger Speed	rpm_turbo	Turbocharger/Turbocharger-1/Speed[rpm]	rev/min	1	NA	NA	0
